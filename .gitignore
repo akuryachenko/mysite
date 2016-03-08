@@ -1,4 +1,0 @@
-.gitignore
-/mysite/local_settings.py
-*.pyc
-
