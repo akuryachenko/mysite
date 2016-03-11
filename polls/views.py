@@ -5,7 +5,7 @@ from django.views import generic
 from django.utils import timezone
 
 from .models import Choice, Question
-
+from .forms import *
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -20,11 +20,13 @@ class IndexView(generic.ListView):
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')[:5]
 
-
-
-class DetailView(generic.DetailView):
+class DetailView(generic.UpdateView):
     model = Question
     template_name = 'polls/detail.html'
+    form_class = QuestionForm
+    
+    def get_succes_url(self):
+        return reverse('polls:results', args=(question.id,))
 
 
 class ResultsView(generic.DetailView):
@@ -34,7 +36,7 @@ class ResultsView(generic.DetailView):
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
+        selected_choice = question.choice_set.get(pk=request.POST['ch'])
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
         return render(request, 'polls/detail.html', {
