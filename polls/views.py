@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
+from django.db.models import F
 
 from .models import Choice, Question
 from .forms import *
@@ -24,8 +25,13 @@ class DetailView(generic.UpdateView):
     model = Question
     template_name = 'polls/detail.html'
     form_class = QuestionForm
-    success_url = 'results/'            
-            
+    success_url = 'results/'     
+           
+    def form_valid(self, form):
+        sch = form.cleaned_data['ch'].id
+        Choice.objects.filter(pk=sch).update(votes=F('votes') + 1)
+        return HttpResponseRedirect(reverse('polls:results', args=(self.object.id,)))
+                
 class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
