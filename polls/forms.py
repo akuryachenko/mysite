@@ -15,9 +15,14 @@ class QuestionForm(forms.ModelForm):
         self.fields['ch'].queryset = question.choice_set.all()
         #self.fields['ch'].label = question.question_text
 
+    def is_valid(self):
+        super(QuestionForm, self)
+        sch = self.data.get('ch', 0)
+        return sch <> 0
+        
     def save(self, commit=False):
         question = super(QuestionForm, self).save(False)
-        sch = self.fields['ch'].widget.choices[2] #self.request.POST['ch']
+        sch = self.data.get('ch', 0)
         selected_choice = question.choice_set.get(pk=sch)
         selected_choice.votes += 1
         selected_choice.save()
