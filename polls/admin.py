@@ -23,7 +23,7 @@ class QuestionAdmin(admin.ModelAdmin):
     
     def was_published_recently(self, obj):
         now = timezone.now()
-        return now - datetime.timedelta(days=5) <= obj.pub_date <= now
+        return now - datetime.timedelta(days=7) <= obj.pub_date <= now
     
     was_published_recently.admin_order_field = 'pub_date'
     was_published_recently.boolean = True

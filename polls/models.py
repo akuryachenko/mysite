@@ -23,4 +23,4 @@ class Choice(models.Model):
     votes = models.IntegerField(default=0)
     
     def __unicode__(self):
-        return self.choicadmin_order_fielde_text
+        return self.choice_text
