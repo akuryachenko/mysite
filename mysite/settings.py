@@ -14,10 +14,7 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
@@ -36,13 +33,14 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'material',
     'material.admin',
-    'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'polls',
+    'cuser',
 ]
 
 MIDDLEWARE_CLASSES = [
