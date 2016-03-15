@@ -44,7 +44,7 @@ class DetailView(generic.UpdateView):
     def form_valid(self, form):
         sch = form.cleaned_data['ch'].id
         Choice.objects.filter(pk=sch).update(votes=F('votes') + 1)
-        return HttpResponseRedirect(reverse('polls:results', args=(self.object.id,)))
+        return HttpResponseRedirect(reverse('results', args=(self.object.id,)))
         
 class ResultsView(generic.DetailView):
     model = Question
