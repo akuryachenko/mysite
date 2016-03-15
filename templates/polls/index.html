@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>The app to poll</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="{% static 'css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+
+<body>
+  
+  <nav class="light-blue accent-3" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Log in</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="http://hidevlab.com/#about">About us</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="#">Navbar Link</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+  
+ 
+  <div class="container">
+      <div class="row">
+          <h4 class="col s3 black-text">Polling</h4>
+          
+          <div class="col s9 black-text" >  
+            {% if latest_question_list %}
+                <div class="collection">
+                {% for question in latest_question_list %}
+                    <li class="collection-item"> <a class="collection-item black-text" href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
+                {% endfor %}
+                </div>
+                {% else %}
+                    <p>No polls are available.</p>
+            {% endif %}
+          </div>
+       </div>
+  </div>      
+
+ 
+  <footer class="page-footer light-blue">
+    <div class="container">
+      <div class="row">
+        
+        <div class="col l3 s12">
+          <h5 class="white-text">Settings</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>
+          </ul>
+        </div>
+
+        <div class="col l3 s12">
+          <h5 class="white-text">Connect</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Link 1</a></li>           
+          </ul>
+        </div>
+
+      </div>
+    </div>
+    
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="orange-text text-lighten-3" href="http://hidevlab.com">HiDevlab</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="{% static 'js/materialize.js' %}"></script>
+  <script src="{% static 'js/init.js' %}"></script>
+
+  </body>
+</html>
