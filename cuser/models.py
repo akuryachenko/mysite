@@ -17,13 +17,14 @@ class CUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
     
-    def create_superuser(self, email, **extra_fields):
+    def create_superuser(self, email, password, **extra_fields):
         if not email:
             raise ValueError('The given email must be set')
             
         user = self.model(email=self.normalize_email(email), **extra_fields)
-        user.set_password(None)
+        user.set_password(password)
         user.is_admin = True
+        user.is_active = True
         user.save(using=self._db)
         return user
 
@@ -75,3 +76,9 @@ class CUser(AbstractBaseUser):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+    
+    @property
+    def username(self):
+        "Username"
+        # Simplest possible answer: All admins are staff
+        return self.email
