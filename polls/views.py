@@ -38,7 +38,6 @@ class DetailView(generic.UpdateView):
     
     def get_queryset(self):
         qs = super(DetailView, self).get_queryset()
-        print qs
         return qs.filter(pub_date__lte=timezone.now())
         
     def form_valid(self, form):

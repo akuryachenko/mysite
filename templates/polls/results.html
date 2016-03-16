@@ -1,12 +1,36 @@
-<h1>{{ question.question_text }}</h1>
+{% extends "polls/base.html" %}
+{% load i18n static %}
 
-<ul>
-{% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
-{% endfor %}
-</ul>
+{% block title %}{{ question.question_text }}{% endblock %}
 
-<a href="{% url 'detail' question.id %}">Vote again?</a>
-<br/br>
-<br/br>
-<a href="{% url 'index' %}">Return questions</a>
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <h4 class="header col s12 black-text"> {{ question.question_text }}</h4>
+    </div>    
+</div>        
+
+    <div class="container">
+        <div class="row">
+            <table class="col s12 black-text">
+                {% for choice in question.choice_set.all %}
+                    <tr>
+                        <td>{{ choice.choice_text }}</td>
+                        <td>{{ choice.votes }} vote{{ choice.votes|pluralize }}</td>
+                    </tr>    
+                {% endfor %}
+            </table>
+        </div>       
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <a class="waves-effect waves-light btn" href="{% url 'index' %}"> <i class="material-icons left">view_list</i>Exit polling</a>
+
+            </button>
+        </div>            
+
+</div>
+
+{% endblock %}
