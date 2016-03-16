@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title>The app to poll</title>
+  <title>Online polling</title>
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -14,25 +14,21 @@
 
 <body>
   
-  <nav class="light-blue accent-3" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Log in</a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="http://hidevlab.com/#about">About us</a></li>
-      </ul>
-
-      <ul id="nav-mobile" class="side-nav">
-        <li><a href="#">Navbar Link</a></li>
-      </ul>
-      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+<nav class="green accent-4" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Online polling</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="/about">About</a></li>
+            <li><a href="/registration">Registration</a></li>
+            <li><a href="/login" class="modal-trigger">Login</a></li>
+        </ul>
     </div>
-  </nav>
+</nav>
   
  
   <div class="container">
       <div class="row">
-          <h4 class="col s3 black-text">Polling</h4>
-          
-          <div class="col s9 black-text" >  
+                 
+          <div class="col s12 black-text" >  
             {% if latest_question_list %}
                 <div class="collection">
                 {% for question in latest_question_list %}
@@ -46,38 +42,16 @@
        </div>
   </div>      
 
- 
- 
   
-        
  
-  <footer class="page-footer light-blue">
-    <div class="container">
-      <div class="row">
-        
-        <div class="col l3 s12">
-          <h5 class="white-text">Settings</h5>
-          <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-          </ul>
-        </div>
-
-        <div class="col l3 s12">
-          <h5 class="white-text">Connect</h5>
-          <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>           
-          </ul>
-        </div>
-
-      </div>
-    </div>
-    
-    <div class="footer-copyright">
+    <div class="footer-copyright green accent-4">
+      <br/br>
       <div class="container">
       Made by <a class="orange-text text-lighten-3" href="http://hidevlab.com">HiDevlab</a>
       </div>
+      <br/br> 
     </div>
-  </footer>
+ 
 
 
   <!--  Scripts-->
