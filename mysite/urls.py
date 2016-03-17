@@ -16,10 +16,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from polls import views as vw
+from cuser import views as vw_cuser
 
 urlpatterns = [
     url(r'^$', vw.IndexView.as_view(), name='index'),
     url(r'^(?P<pk>[0-9]+)/$', vw.DetailView.as_view(), name='detail'),
     url(r'^(?P<pk>[0-9]+)/results/$', vw.ResultsView.as_view(), name='results'),
     url(r'^admin/', admin.site.urls),
-]
+    url(r'^registration/', vw_cuser.EmailUserRegistrationView.as_view(), name='registration'),
+]   

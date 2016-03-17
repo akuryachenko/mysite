@@ -1,18 +1,34 @@
-{% extends "polls/base.html" %}
+{% extends "base.html" %}
 {% load i18n static %}
 
 {% block title %}{{ question.question_text }}{% endblock %}
 
 {% block content %}
 
-<div class="container">
+<div style="font-size: 32px;" class="container">
     <div class="row">
         <h4 class="header col s12 black-text"> {{ question.question_text }}</h4>
         {% if form.ch.errors %}
            <h4 class="header col s12 red-text"> You should choose and submit!</h4>
+        <!-- Modal Structure -->
+         
+            <div id="modal1" class="modal">
+                <div class="modal-content">
+                  <h4>Modal Header</h4>
+                  <p>A bunch of text</p>
+                </div>
+            </div>
+            {% block extrajs %}
+                <script>
+                    $(document).ready(function(){
+                        $('#modal1').openModal();
+                  });
+                </script>         
+            {% endblock %}
         {% endif %}
     </div>    
 </div>        
+
 <form method="post">
     <div class="container">
         <div class="row">
@@ -28,7 +44,7 @@
 
     <div class="container">
         <div class="row">
-            <button class="waves-effect waves-light" type="submit" name="vote" value="vote" >Submit
+            <button class="waves-effect btn waves-light" type="submit" name="vote" value="vote" >Submit
             <i class="material-icons right">send</i>            
             </button>
         </div>            
