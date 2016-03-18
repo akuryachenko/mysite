@@ -15,12 +15,21 @@
 
 <body>
 <header>  
+    <ul id="dropdown1" class="dropdown-content">
+        <li><a href="/password_change">Change password</a></li>
+        <li class="divider"></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
     <nav class="green accent-4" role="navigation">
         <div class="nav-wrapper container"><a id="logo-container" href="{% url 'index' %}" class="brand-logo">Online polling</a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="/about">About</a></li>
-                <li><a href="/registration">Registration</a></li>
-                <li><a href="/login" class="modal-trigger">Login</a></li>
+                {% if user.is_authenticated %}
+                    <li><a class="dropdown-button" data-activates="dropdown1">{{user.email}}<i class="material-icons right">arrow_drop_down</i></a></li>
+                {% else %}    
+                    <li><a href="/registration">Registration</a></li>
+                    <li><a href="/login" class="modal-trigger">Login</a></li>
+                {% endif %}        
             </ul>
         </div>
     </nav>

@@ -26,4 +26,6 @@ urlpatterns = [
     url(r'^registration/', vw_cuser.EmailUserRegistrationView.as_view(), name='registration'),
     url(r'^confirm-email/(?P<pk>\d+)/(?P<sign_user>[\w.@+-_]+)/', vw_cuser.EmailUserConfirmView.as_view(), name='confirm'),
     url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'cuser/login.html'}),
+    url(r'^password_change/$', 'django.contrib.auth.views.password_change', {'template_name': 'cuser/password_change.html', 'post_change_redirect': 'index'}),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': 'index'}),
 ]
