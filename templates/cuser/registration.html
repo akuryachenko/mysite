@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n static %}
 
-{% block title %}{{ question.question_text }}{% endblock %}
+{% block title %}Registration on website online-polling{% endblock %}
 
 {% block content %}
 <br><br>
@@ -9,8 +9,8 @@
     <div class="container">
         <div class="row">
             <div class="col s4 offset-s4">
-              <div class="card">
-                <div class="card-content green-text ">
+              <div class="card grey lighten-5">
+                <div class="card-content black-text ">
                   <span class="card-title">Confirm your email</span>
                     {% csrf_token %}
                     <br>

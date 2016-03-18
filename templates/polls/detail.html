@@ -5,26 +5,11 @@
 
 {% block content %}
 
-<div style="font-size: 32px;" class="container">
+<div class="container">
     <div class="row">
         <h4 class="header col s12 black-text"> {{ question.question_text }}</h4>
         {% if form.ch.errors %}
-           <h4 class="header col s12 red-text"> You should choose and submit!</h4>
-        <!-- Modal Structure -->
-         
-            <div id="modal1" class="modal">
-                <div class="modal-content">
-                  <h4>Modal Header</h4>
-                  <p>A bunch of text</p>
-                </div>
-            </div>
-            {% block extrajs %}
-                <script>
-                    $(document).ready(function(){
-                        $('#modal1').openModal();
-                  });
-                </script>         
-            {% endblock %}
+           <h4 class="header col s12 red-text"> You should choose and submit!</h4>            
         {% endif %}
     </div>    
 </div>        
@@ -47,7 +32,8 @@
             <button class="waves-effect btn waves-light" type="submit" name="vote" value="vote" >Submit
             <i class="material-icons right">send</i>            
             </button>
-        </div>            
+        </div>    
+    </div>                
 </form>
 </div>
 

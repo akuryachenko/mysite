@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^(?P<pk>[0-9]+)/results/$', vw.ResultsView.as_view(), name='results'),
     url(r'^admin/', admin.site.urls),
     url(r'^registration/', vw_cuser.EmailUserRegistrationView.as_view(), name='registration'),
+    url(r'^confirm-email/(?P<pk>\d+)/(?P<sign_user>[\w.@+-_]+)/', vw_cuser.EmailUserConfirmView.as_view(), name='confirm'),
 ]   
