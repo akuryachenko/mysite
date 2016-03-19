@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib.auth.views import login, password_change, logout
 from polls import views as vw
 from cuser import views as vw_cuser
 
@@ -25,7 +26,12 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^registration/', vw_cuser.EmailUserRegistrationView.as_view(), name='registration'),
     url(r'^confirm-email/(?P<pk>\d+)/(?P<sign_user>[\w.@+-_]+)/', vw_cuser.EmailUserConfirmView.as_view(), name='confirm'),
-    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'cuser/login.html'}),
+    url(r'^login/$', login, {'template_name': 'cuser/login.html'}),
+    url(r'^password_change/$', password_change, {'template_name': 'cuser/password_change.html', 'post_change_redirect': 'index'}),
+    url(r'^logout/$', logout, {'next_page': 'index'}),
+]
+"""
+ url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'cuser/login.html'}),
     url(r'^password_change/$', 'django.contrib.auth.views.password_change', {'template_name': 'cuser/password_change.html', 'post_change_redirect': 'index'}),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': 'index'}),
-]
+"""

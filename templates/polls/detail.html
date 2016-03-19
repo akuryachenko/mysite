@@ -29,12 +29,36 @@
 
     <div class="container">
         <div class="row">
-            <button class="waves-effect btn waves-light" type="submit" name="vote" value="vote" >Submit
-            <i class="material-icons right">send</i>            
-            </button>
+            {% if user.is_authenticated %} 
+                <button class="waves-effect btn waves-light" type="submit" name="vote" value="vote" >Submit
+                <i class="material-icons right">send</i>            
+                </button>
+            {% else %}    
+            
+            {% endif %} 
         </div>    
     </div>                
 </form>
-</div>
+    
+{% if user.is_authenticated %} 
+{% else %}    
+    <div class="container">
+        <div class="row">            
+             <div id="modal1" class="modal modal-fixed-footer " style="width: 30%; height: 22%; z-index: 1003; display: none; opacity: 0; transform: scaleX(0.7); top: 183.058px;">
+                <div class="modal-content">
+                    <h3>Online polling</h3>
+                    <p>In order to vote you must register</p>
+                </div>
+                <div class="modal-footer">
+                    <a class="modal-action modal-close waves-effect waves-red btn-flat " href="#!">Disagree</a>
+                    <a class="modal-action modal-close waves-effect waves-green btn-flat " href= {% url 'registration'%}>Registration</a>
+                </div>
+            </div>
+            <a class="modal-trigger waves-effect waves-light btn" href="#modal1">Submit
+            <i class="material-icons right">send</i> 
+            </a>
+        </div>    
+    </div>                    
+{% endif %} 
 
 {% endblock %}

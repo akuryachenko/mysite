@@ -26,7 +26,7 @@ class Choice(models.Model):
     def __unicode__(self):
         return self.choice_text
 
-class CUserChoce(models.Model):
-    question= models.ForeignKey(Question, on_delete=models.CASCADE)
+class CUserChoice(models.Model):
+    choice= models.ForeignKey(Choice, on_delete=models.CASCADE)
     cuser = models.ForeignKey(CUser, on_delete=models.CASCADE)
     date_vote = models.DateField()
