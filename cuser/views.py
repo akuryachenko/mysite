@@ -54,7 +54,7 @@ class  EmailUserConfirmView(UpdateView):
     
             
     def get_success_url(self):
-        return reverse('index')
+        return reverse('login')
        
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
