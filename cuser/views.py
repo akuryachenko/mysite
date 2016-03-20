@@ -9,6 +9,7 @@ from django.core.mail import send_mail
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 
+from polls.models import Choice, Question, CUserChoice
 from .models import CUser
 from .forms import *
 
@@ -23,6 +24,11 @@ class  EmailUserRegistrationView(CreateView):
     
     def get_success_url(self):
         return reverse('index')
+    
+    def dispatch(self, request, ch, *args, **kwargs):
+        self.ch = ch #early voting
+        return super(EmailUserRegistrationView, self).dispatch(request, *args, **kwargs)        
+
     
     def form_valid(self, form):
         resp = super(EmailUserRegistrationView, self).form_valid(form)
@@ -44,8 +50,17 @@ class  EmailUserRegistrationView(CreateView):
             from_email = settings.DEFAULT_FROM_EMAIL ,
             fail_silently = True,
         )
-        return resp
-
+        #save early voting
+        try:
+            choice = Choice.objects.get(pk=self.ch)
+        except:
+            pass
+        else:
+            user_choice = CUserChoice(choice=choice, cuser=self.request.user, date_vote = timezone.now())
+            user_choice.save()
+        finally:
+            return resp
+        
 
 class  EmailUserConfirmView(UpdateView):
     model = CUser
@@ -54,7 +69,7 @@ class  EmailUserConfirmView(UpdateView):
     
             
     def get_success_url(self):
-        return reverse('login')
+        return reverse('index')
        
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -65,11 +80,8 @@ class  EmailUserConfirmView(UpdateView):
         if self.object.is_active == True:
             raise Http404("Account is active yet!")
         
-        
         if s1<>s2:
             raise Http404("Invalid confirm email information")
-        
-        
         
         return super(EmailUserConfirmView, self).dispatch(request, *args, **kwargs)
     
