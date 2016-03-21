@@ -1,10 +1,11 @@
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
 from django.db.models import F
 from django.utils import timezone
+
 
 from .models import Choice, Question, CUserChoice
 from .forms import *
@@ -29,8 +30,7 @@ class IndexView(generic.ListView):
     def get_success_url(self):
         return reverse('results', args=(self.object.id,))   
     
-
-        
+       
 class DetailView(generic.UpdateView):
     model = Question
     template_name = 'polls/detail.html'
@@ -61,5 +61,13 @@ class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
 
-
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user.is_authenticated():
+            raise Http404("User is anonymous")
+        return super(ResultsView, self).dispatch(request, *args, **kwargs)
+    
+    def get_queryset(self):
+        qs = super(ResultsView, self).get_queryset()
+        return qs.filter(pub_date__lte=timezone.now())
+    
 
