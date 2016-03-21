@@ -22,7 +22,6 @@ class IndexView(generic.ListView):
         
         if self.request.user.is_authenticated():
             q_u = CUserChoice.objects.filter(cuser=self.request.user).values('choice__question')
-            print q_u
             return question.exclude(id__in=q_u)[:5]
         else:
             return question[:5]
@@ -45,7 +44,6 @@ class DetailView(generic.UpdateView):
             
     def form_valid(self, form):
         sch = form.cleaned_data['ch'].id
-        print ''
         if self.request.user.is_authenticated():
             Choice.objects.filter(pk=sch).update(votes=F('votes') + 1)
             choice = Choice.objects.get(pk=sch)

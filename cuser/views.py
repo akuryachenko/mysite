@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.mail import send_mail
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
+from django.utils import timezone
 
 from polls.models import Choice, Question, CUserChoice
 from .models import CUser
@@ -52,14 +53,12 @@ class  EmailUserRegistrationView(CreateView):
         )
         #save early voting
         try:
-            choice = Choice.objects.get(pk=self.ch)
+            ch = Choice.objects.get(pk=self.ch)
+            user_choice = CUserChoice(choice=ch, cuser=user, date_vote = timezone.now())
+            user_choice.save()
         except:
             pass
-        else:
-            user_choice = CUserChoice(choice=choice, cuser=self.request.user, date_vote = timezone.now())
-            user_choice.save()
-        finally:
-            return resp
+        return resp
         
 
 class  EmailUserConfirmView(UpdateView):
