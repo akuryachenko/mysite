@@ -41,6 +41,9 @@ class DetailView(generic.UpdateView):
         qs = super(DetailView, self).get_queryset()
         return qs.filter(pub_date__lte=timezone.now())
     
+    def dispatch(self, request, *args, **kwargs):
+        request.session.delete('anonym_vote')
+        return super(DetailView, self).dispatch(request, *args, **kwargs)       
             
     def form_valid(self, form):
         sch = form.cleaned_data['ch'].id
@@ -51,7 +54,8 @@ class DetailView(generic.UpdateView):
             user_choice.save()
             return HttpResponseRedirect(reverse('results', args=(self.object.id,)))
         else:
-            return HttpResponseRedirect(reverse('registration', args=(sch,)))
+            self.request.session['anonym_vote'] = sch
+            return HttpResponseRedirect(reverse('registration'))
 
 class ResultsView(generic.DetailView):
     model = Question

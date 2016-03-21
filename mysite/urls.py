@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^(?P<pk>[0-9]+)/$', vw.DetailView.as_view(), name='detail'),
     url(r'^(?P<pk>[0-9]+)/results/$', vw.ResultsView.as_view(), name='results'),
     url(r'^admin/', admin.site.urls),
-    url(r'^registration/(?P<ch>\d+)', vw_cuser.EmailUserRegistrationView.as_view(), name='registration'),
+    url(r'^registration/$', vw_cuser.EmailUserRegistrationView.as_view(), name='registration'),
     url(r'^confirm-email/(?P<pk>\d+)/(?P<sign_user>[\w.@+-_]+)/', vw_cuser.EmailUserConfirmView.as_view(), name='confirm'),
     url(r'^login/$', login, {'template_name': 'cuser/login.html'}),
     url(r'^password_change/$', password_change, {'template_name': 'cuser/password_change.html', 'post_change_redirect': 'index'}),

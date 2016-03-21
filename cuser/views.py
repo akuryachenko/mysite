@@ -14,7 +14,6 @@ from polls.models import Choice, Question, CUserChoice
 from .models import CUser
 from .forms import *
 
-
 class  EmailUserRegistrationView(CreateView):
     model = CUser
     template_name = 'cuser/registration.html'
@@ -25,12 +24,7 @@ class  EmailUserRegistrationView(CreateView):
     
     def get_success_url(self):
         return reverse('index')
-    
-    def dispatch(self, request, ch, *args, **kwargs):
-        self.ch = ch #early voting
-        return super(EmailUserRegistrationView, self).dispatch(request, *args, **kwargs)        
-
-    
+ 
     def form_valid(self, form):
         resp = super(EmailUserRegistrationView, self).form_valid(form)
         user = self.object 
@@ -53,7 +47,8 @@ class  EmailUserRegistrationView(CreateView):
         )
         #save early voting
         try:
-            ch = Choice.objects.get(pk=self.ch)
+            sch = self.request.session.pop('anonym_vote') #early voting
+            ch = Choice.objects.get(pk=sch)
             user_choice = CUserChoice(choice=ch, cuser=user, date_vote = timezone.now())
             user_choice.save()
         except:
