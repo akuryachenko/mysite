@@ -1,13 +1,16 @@
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.utils import timezone
 from django.conf import settings
 from django.contrib.auth.hashers import check_password
- 
+from django.core.signing import Signer
+from django import forms 
 from django.core.urlresolvers import reverse
 import datetime
 
+
 from polls.models import *
 from .models  import *
+
 
 
 def create_superuser(email, password):
@@ -33,9 +36,10 @@ class CUserMethodTests(TestCase):
         self.assertEqual(user.has_perm(None), True)
         self.assertEqual(user.has_module_perms(None), True)
         self.assertEqual(user.username, "ainf23@mail.ru")        
-        
+        CUser.objects.all().delete
+                
     
-    def test_create_bad_super_user(self):
+    def test_create_super_user_none_email(self):
         with self.assertRaisesRegexp(ValueError, 'The given email must be set'): 
             create_superuser("", "111")
             
@@ -53,8 +57,67 @@ class CUserMethodTests(TestCase):
         self.assertEqual(user.has_perm(None), True)
         self.assertEqual(user.has_module_perms(None), True)
         self.assertEqual(user.username, "ainf23@rambler.ru")        
+        CUser.objects.all().delete
         
-    def test_create_bad_user(self):
+    def test_create_user_user_none_email(self):
         with self.assertRaisesRegexp(ValueError, 'The given email must be set'): 
             create_user("",)
     
+
+class CUserViewFormTests(TestCase):
+    
+    def test_login_superuser(self):
+        create_superuser("ainf23@mail.ru", "111") 
+        log = self.client.login(username='ainf23@mail.ru', password='111')
+        self.assertEqual(log, True)
+        
+        response = self.client.post('/registration/', {'email':'ainf23@mail.ru'})
+        self.assertContains(response, "User with this Email address already exists")
+        CUser.objects.all().delete
+
+    def test_registration_and_confirm_user(self):
+        response = self.client.post('/registration/', {'email':'ainf23@mail.ru'})
+              
+        self.assertIn('reference',response.context)
+        
+        ref = response.context['reference']
+                
+        signer = Signer()        
+        sign = signer.sign("ainf23@mail.ru")
+        
+        self.assertRegexpMatches(ref, sign)
+                
+        response = self.client.post(ref, {'email':'ainf23@mail.ru', 'password1':'222', 'password2':'222'})
+           
+        log = self.client.login(username='ainf23@mail.ru', password='222')
+        self.assertEqual(log, True)
+        CUser.objects.all().delete
+    
+    def test_registration_user_incorrect_email(self):
+        response = self.client.post('/registration/', {'email':'ainf23mail.ru'})
+        self.assertContains(response, "Enter a valid email address")
+        self.assertNotIn('reference',response.context)
+        CUser.objects.all().delete    
+    
+    def test_registration_and_confirm_user_password_missmatch(self):
+        response = self.client.post('/registration/', {'email':'ainf23@mail.ru'})
+        ref = response.context['reference']
+             
+        response = self.client.post(ref, {'email':'ainf23@mail.ru', 'password1':'222', 'password2':'333'})
+        self.assertContains(response, "The two password fields didn&#39;t match.")
+        
+        CUser.objects.all().delete
+        
+    def test_registration_and_confirm_user_bad_refference (self):
+        response = self.client.post('/registration/', {'email':'ainf23@mail.ru'})
+        ref = response.context['reference']
+        ref = ref.replace("ainf23@mail.ru","ainf24@mail.ru")
+        response = self.client.post(ref, {'email':'ainf24@mail.ru', 'password1':'222', 'password2':'222'})
+        self.assertEqual(response.status_code, 404)        
+        
+        log = self.client.login(username='ainf24@mail.ru', password='222')
+        self.assertEqual(log, False)
+        CUser.objects.all().delete
+        
+
+
