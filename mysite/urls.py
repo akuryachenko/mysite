@@ -16,10 +16,14 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.views import login, password_change, logout
+from django.conf.urls import url, include
+
 from polls import views as vw
 from cuser import views as vw_cuser
 
+
 urlpatterns = [
+    url(r'^accounts/', include('allauth.urls')),
     url(r'^$', vw.IndexView.as_view(), name='index'),
     url(r'^(?P<pk>[0-9]+)/$', vw.DetailView.as_view(), name='detail'),
     url(r'^(?P<pk>[0-9]+)/results/$', vw.ResultsView.as_view(), name='results'),
