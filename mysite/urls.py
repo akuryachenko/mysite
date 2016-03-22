@@ -17,10 +17,12 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.views import login, password_change, logout
 from django.conf.urls import url, include
+#import allauth  
 
 from polls import views as vw
 from cuser import views as vw_cuser
 
+admin.autodiscover()
 
 urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
