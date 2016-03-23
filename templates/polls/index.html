@@ -11,7 +11,7 @@
             {% if latest_question_list %}
                 <div class="collection">
                 {% for question in latest_question_list %}
-                    <li class="collection-item"> <a class="collection-item black-text" href="{% url 'detail' question.id %}">{{ question.question_text }}</a>
+                    <li class="collection-item avatar"> <img src="/static/{{ question.question_img}}" alt="" class="circle"> <a class="collection-item black-text" href="{% url 'detail' question.id %}">{{ question.question_text }}</a>
                 {% endfor %}
                 </div>
                 {% else %}

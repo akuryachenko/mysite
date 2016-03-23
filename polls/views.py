@@ -5,6 +5,8 @@ from django.views import generic
 from django.utils import timezone
 from django.db.models import F
 from django.utils import timezone
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 from .models import Choice, Question, CUserChoice
@@ -29,7 +31,6 @@ class IndexView(generic.ListView):
     
     def get_success_url(self):
         return reverse('results', args=(self.object.id,))   
-    
        
 class DetailView(generic.UpdateView):
     model = Question
