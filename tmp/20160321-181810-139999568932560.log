@@ -1,0 +1,47 @@
+Content-Type: multipart/alternative;
+ boundary="===============7990943135699448971=="
+MIME-Version: 1.0
+Subject: Account activation on the website online-polling.com
+From: ainf23@rambler.ru
+To: ainf23@yandex.ru
+Date: Mon, 21 Mar 2016 12:18:10 -0000
+Message-ID: <20160321121810.9785.71544@kvn-TC>
+
+--===============7990943135699448971==
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+
+Account activation on the website online-polling.com
+
+To complete registration, follow the activation link in your email-address:
+http://127.0.0.1:8000/confirm-email/76/ainf23@yandex.ru:_uVjHBZ5xec_uspaAFBg8zIy5Gg/
+
+To complete the account activation procedure.
+
+--===============7990943135699448971==
+MIME-Version: 1.0
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta http-equiv="Content-Type" content="text/html charset=utf-8" />
+    <title>Online polling</title>
+</head>
+
+    <body>
+        <h2 class="messageSubjectValue">Account activation on the website online-polling.com</h2>
+            <br>
+            <p>To complete registration, follow the activation link in your email-address:</p>
+            <p>reference:<a href="http://127.0.0.1:8000/confirm-email/76/ainf23@yandex.ru:_uVjHBZ5xec_uspaAFBg8zIy5Gg/"></a></p>
+            <p>To complete the account activation procedure.</p>
+    </body>
+</html>
+
+--===============7990943135699448971==--
+
+-------------------------------------------------------------------------------
