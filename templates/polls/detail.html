@@ -5,14 +5,14 @@
 
 {% block content %}
 <div class="parallax-container" style="height: 100%;">
-    <div class="parallax"><img src="/static/{{ question.question_img}}" ></div>
+    <div class="parallax"><img src="/static/{{ question.question_img}}"></div>
         <div class="container">
             <form method="post">
                 {% csrf_token %}    
                 <div class="row">        
                     <h4 class="header col s12   white-text"> {{ question.question_text }}</h4>
                     <div class="col s6 m4">        
-                        <div class="card blue-grey lighten-1">
+                        <div class="card grey accent-3">
                             <div class="card-content">
                                 {% for choice in form.ch %}
                                     <div class="row">   

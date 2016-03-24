@@ -15,7 +15,7 @@ class CUserManager(BaseUserManager):
         user = self.model(email=self.normalize_email(email), **extra_fields)
         user.is_admin = False
         user.is_active = False
-        user.set_password(None)
+        #user.set_password(None)
         user.save(using=self._db)
         return user
     
@@ -36,7 +36,7 @@ class CUserManager(BaseUserManager):
 class CUser(AbstractBaseUser):
     email = models.EmailField(_('email address'), max_length=254, unique=True)
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
     objects = CUserManager()

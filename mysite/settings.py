@@ -46,7 +46,12 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
+    'easy_thumbnails',
 ]
+
+SOUTH_MIGRATION_MODULES = {
+    'easy_thumbnails': 'easy_thumbnails.south_migrations',
+}
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -82,15 +87,12 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-LOGIN_REDIRECT_URL = '/'
-
-SOCIALACCOUNT_QUERY_EMAIL = True
+SITE_ID = 2
    
 SOCIALACCOUNT_PROVIDERS = \
     {'facebook':
        {'METHOD': 'oauth2',
         'SCOPE': ['email'],
-        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
         'FIELDS': [
             'id',
             'email',
@@ -106,15 +108,24 @@ SOCIALACCOUNT_PROVIDERS = \
         'EXCHANGE_TOKEN': True,
         'LOCALE_FUNC': lambda request: 'en_US',
         'VERIFIED_EMAIL': False,
-        'VERSION': 'v2.4'}}
+        'VERSION': 'v2.5'}}
 
 
+#ACCOUNT_FORMS = {'login': 'django.contrib.auth.forms.AuthenticationForm'}
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'    
+SOCIALACCOUNT_QUERY_EMAIL = True
 
-SITE_ID = 2
+#24/03/2016
+#SOCIALACCOUNT_AUTO_SIGNUP = True
+SOCIALACCOUNT_ADAPTER = 'cuser.adapter.CUserSocialAccountAdapter'
+ACCOUNT_ADAPTER = 'cuser.adapter.CUserAccountAdapter'
+LOGIN_REDIRECT_URL = '/'
+#ACCOUNT_SIGNUP_FORM_CLASS =None
+
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 

@@ -71,8 +71,8 @@ class  EmailUserConfirmView(UpdateView):
         s1 = signer.sign(self.object.email)
         s2 = kwargs.get('sign_user', None)
         
-        if self.object.is_active == True:
-            raise Http404("Account is active yet!")
+        #if self.object.is_active == True:
+        #    raise Http404("Account is active yet!")
         
         if s1<>s2:
             raise Http404("Invalid confirm email information")
