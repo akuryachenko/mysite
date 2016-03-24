@@ -15,6 +15,8 @@ class CUserManager(BaseUserManager):
         user = self.model(email=self.normalize_email(email), **extra_fields)
         user.is_admin = False
         user.is_active = False
+        print   "----------------------------------"
+        print user.is_active
         #user.set_password(None)
         user.save(using=self._db)
         return user

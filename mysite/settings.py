@@ -82,6 +82,7 @@ TEMPLATES = [
     },
 ]
 
+
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
@@ -120,11 +121,11 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 SOCIALACCOUNT_QUERY_EMAIL = True
 
 #24/03/2016
-#SOCIALACCOUNT_AUTO_SIGNUP = True
+
 SOCIALACCOUNT_ADAPTER = 'cuser.adapter.CUserSocialAccountAdapter'
-ACCOUNT_ADAPTER = 'cuser.adapter.CUserAccountAdapter'
+#ACCOUNT_ADAPTER = 'cuser.adapter.CUserAccountAdapter'
 LOGIN_REDIRECT_URL = '/'
-#ACCOUNT_SIGNUP_FORM_CLASS =None
+
 
 
 WSGI_APPLICATION = 'mysite.wsgi.application'

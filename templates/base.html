@@ -30,9 +30,9 @@
                 {% else %}    
                     <li><a href="/registration">Registration</a></li>
                     <li><a href="/login" class="modal-trigger">Login</a></li>
-                    
+                    <li><a href="{% provider_login_url 'facebook' method='oauth2' %}">Facebook</a></li>    
                 {% endif %}        
-                <li><a href="{% provider_login_url 'facebook' method='oauth2' %}">Facebook</a></li>
+                
             </ul>
         </div>
     </nav>

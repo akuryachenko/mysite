@@ -9,6 +9,7 @@ from django.core.mail import send_mail
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils import timezone
+from django.contrib.auth import authenticate, login
 
 from polls.models import Choice, Question, CUserChoice
 from .models import CUser
@@ -34,7 +35,7 @@ class  EmailUserRegistrationView(CreateView):
         
         txt_body = render_to_string(self.email_text_template_name,
                                     {'reference': ref_url})
-                                    
+    
         html_body = render_to_string(self.email_html_template_name,
                                     {'reference': ref_url})
         send_mail(
@@ -71,11 +72,19 @@ class  EmailUserConfirmView(UpdateView):
         s1 = signer.sign(self.object.email)
         s2 = kwargs.get('sign_user', None)
         
-        #if self.object.is_active == True:
-        #    raise Http404("Account is active yet!")
+        if self.object.is_active == True:
+            raise Http404("Account is active yet!")
         
         if s1<>s2:
             raise Http404("Invalid confirm email information")
         
         return super(EmailUserConfirmView, self).dispatch(request, *args, **kwargs)
+    
+    def form_valid(self, form):
+        ret = super(EmailUserConfirmView, self).form_valid(form)
+        user = self.object
+        user = authenticate(username=user.email, password=form.cleaned_data["password1"])
+        login(self.request, user)
+        
+        return ret
     

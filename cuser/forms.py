@@ -12,7 +12,15 @@ class EmailUserRegistrationForm(forms.ModelForm):
     class Meta:
         model = CUser
         fields = ('email',)
-
+    
+    def save(self, commit=True):
+        user = super(EmailUserRegistrationForm, self).save(commit=False)
+        user.is_active = False
+        if commit:
+            user.save()
+        return user
+    
+    
 class EmailUserConfirmForm(forms.ModelForm):
 
     error_messages = {
@@ -52,8 +60,7 @@ class EmailUserConfirmForm(forms.ModelForm):
         user.set_password(self.cleaned_data["password1"])
         user.is_active = True
         if commit:
-            user.save()
+            user.save()       
         return user
-
 
 

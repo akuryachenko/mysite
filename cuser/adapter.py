@@ -8,10 +8,11 @@ from django.conf import settings
 from cuser.models import CUser
 
 
+
 class CUserSocialAccountAdapter(DefaultSocialAccountAdapter):
 
     def pre_social_login(self, request, sociallogin):
-       
+                
         # social account already exists, so this is just a login
         if sociallogin.is_existing:
             return
@@ -56,13 +57,12 @@ class CUserSocialAccountAdapter(DefaultSocialAccountAdapter):
         sociallogin.connect(request, existing_email.user)    
         """
 
-
+"""
 class CUserAccountAdapter(DefaultAccountAdapter):
     
      def save_user(self, request, user, form, commit=True):
-        print "---------------------adapter-------------------------"
         user = super(CUserAccountAdapter, self).save_user(request, user, form, commit=False)
         user.is_active = True    
         user.save()
         return user
-
+"""
