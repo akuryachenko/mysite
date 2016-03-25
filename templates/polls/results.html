@@ -14,10 +14,10 @@
     <div class="container">
         <div class="row">
             <table class="col s12 black-text">
-                {% for choice in question.choice_set.all %}
+                {% for choice in user_votes %}
                     <tr>
                         <td>{{ choice.choice_text }}</td>
-                        <td>{{ choice.votes }} vote{{ choice.votes|pluralize }}</td>
+                        <td>{{ choice.num }} vote{{ choice.num|pluralize }}</td>
                     </tr>    
                 {% endfor %}
             </table>

@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
 from django.views import generic
 from django.utils import timezone
-from django.db.models import F
+from django.db.models import F, Count
 from django.utils import timezone
 from django.conf import settings
 from django.conf.urls.static import static
@@ -49,7 +49,7 @@ class DetailView(generic.UpdateView):
     def form_valid(self, form):
         sch = form.cleaned_data['ch'].id
         if self.request.user.is_authenticated():
-            Choice.objects.filter(pk=sch).update(votes=F('votes') + 1)
+            #Choice.objects.filter(pk=sch).update(votes=F('votes') + 1)
             choice = Choice.objects.get(pk=sch)
             user_choice = CUserChoice(choice=choice, cuser=self.request.user, date_vote = timezone.now())
             user_choice.save()
@@ -67,7 +67,14 @@ class ResultsView(generic.DetailView):
             raise Http404("User is anonymous")
         return super(ResultsView, self).dispatch(request, *args, **kwargs)
     
-    def get_queryset(self):
+    def get_context_data(self, **kwargs):
+        context = super(ResultsView, self).get_context_data(**kwargs)
+        question = context['question']
+        context['user_votes'] = question.choice_set.all().annotate(num=Count('cuserchoice'))
+        print question
+        return context
+    
+    def get_queryset(self):        
         qs = super(ResultsView, self).get_queryset()
         return qs.filter(pub_date__lte=timezone.now())
     
