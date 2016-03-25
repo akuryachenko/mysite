@@ -53,7 +53,14 @@ class DetailView(generic.UpdateView):
             choice = Choice.objects.get(pk=sch)
             user_choice = CUserChoice(choice=choice, cuser=self.request.user, date_vote = timezone.now())
             user_choice.save()
-            return HttpResponseRedirect(reverse('results', args=(self.object.id,)))
+            
+            print '--------------valid------------'
+            context = self.get_context_data()
+            question = context['question']
+            context['user_votes'] = question.choice_set.all().annotate(num=Count('cuserchoice'))
+            return render(self.request, 'polls/results_new.html', context)
+            
+            #return HttpResponseRedirect(reverse('results', args=(self.object.id,)))
         else:
             self.request.session['anonym_vote'] = sch
             return HttpResponseRedirect(reverse('registration'))

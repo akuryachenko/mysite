@@ -7,7 +7,7 @@
 <div class="parallax-container" style="height: 100%;">
     <div class="parallax"><img src="/static/{{ question.question_img}}"></div>
         <div class="container">
-            <form method="post">
+            <form method="post" id = "form1">
                 {% csrf_token %}    
                 <div class="row">        
                     <h4 class="header col s12   white-text"> {{ question.question_text }}
