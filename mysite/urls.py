@@ -28,7 +28,6 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^$', vw.IndexView.as_view(), name='index'),
     url(r'^(?P<pk>[0-9]+)/$', vw.DetailView.as_view(), name='detail'),
-    url(r'^(?P<pk>[0-9]+)/results/$', vw.ResultsView.as_view(), name='results'),
     url(r'^admin/', admin.site.urls),
     url(r'^registration/$', vw_cuser.EmailUserRegistrationView.as_view(), name='registration'),
     url(r'^confirm-email/(?P<pk>\d+)/(?P<sign_user>[\w.@+-_]+)/', vw_cuser.EmailUserConfirmView.as_view(), name='confirm'),

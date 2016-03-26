@@ -32,28 +32,13 @@ class IndexView(generic.ListView):
        
 class DetailView(generic.UpdateView):
     model = Question
-    template_name = 'polls/detail.html'
+    template_name = "polls/detail.html"
     form_class = QuestionForm
       
-    
     def get_queryset(self):
         question = super(DetailView, self).get_queryset().filter(pub_date__lte=timezone.now())
         return question
     
-    def get_object(self, queryset=None):
-        question = super(DetailView, self).get_object()
-        if self.request.user.is_authenticated():
-            q_u = CUserChoice.objects.filter(cuser=self.request.user).values('choice__question')
-            
-            if q_u.filter(choice__question=question.id).count() > 0:
-                print "-------------------------------"
-                print q_u.filter(choice__question=question.id).count()
-                reverse('index')
-                
-        return question    
-        
-        
-        
     def dispatch(self, request, *args, **kwargs):
         request.session.delete('anonym_vote')
         return super(DetailView, self).dispatch(request, *args, **kwargs)       
@@ -66,45 +51,53 @@ class DetailView(generic.UpdateView):
             user_choice = CUserChoice(choice=choice, cuser=self.request.user, date_vote = timezone.now())
             user_choice.save()
             
-            # ---------results
+            #results
             context = self.get_context_data()
+            return render(self.request, 'polls/detail_results.html', context)
+                       
+        else:
+            self.request.session['anonym_vote'] = sch
+            return HttpResponseRedirect(reverse('registration'))
+    
+    def get_template_names(self):
+        template_name =  super(DetailView, self).get_template_names()
+        if not self.request.user.is_authenticated():
+            return template_name
+        else:
+            q_u = CUserChoice.objects.filter(cuser=self.request.user).values('choice__question')
+            if q_u.filter(choice__question=self.object.id).count() > 0:
+                return ['polls/results.html']      
+                
+            return template_name
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailView, self).get_context_data(**kwargs)
+        
+        if self.request.user.is_authenticated():
             question = context['question']
+            print question
+
+            choices = Choice.objects.filter(question=question).values('id') #all().cuserchoice_set(cuser=self.request.user).all().first()
+            vote = CUserChoice.objects.filter(cuser=self.request.user).values('choice')
+            choice = choices.filter(id__in=vote).first()
+
+            choice_id = choice['id'] if choice else None
+                
             votes = question.choice_set.all().annotate(num=Count('cuserchoice'))
-            
-            user_votes = [{'text': v.choice_text, 'num': v.num, 'per': 0, 'b': True if v.id==sch else False} for v in votes]
+           
+            user_votes = [{'text': v.choice_text, 'num': v.num, 'per': 0, 'b': True if v.id==choice_id else False} for v in votes]
             
             sum_votes = 0
             for i in user_votes:
                 sum_votes = sum_votes + i['num']
-                
-            for i in user_votes:
-                i['per'] = i['num']* 100 / sum_votes
-                                
+            
+            if sum_votes > 0:
+                for i in user_votes:
+                    i['per'] = i['num']* 100 / sum_votes
+            
             context['user_votes'] = user_votes
-            return render(self.request, 'polls/results.html', context)
-                       
-        else:
-            self.request.session['anonym_vote'] = sch
-            return HttpResponseRedirect('/')
-
-class ResultsView(generic.DetailView):
-    model = Question
-    template_name = 'polls/results.html'
-
-    def dispatch(self, request, *args, **kwargs):
-        if not self.request.user.is_authenticated():
-            raise Http404("User is anonymous")
-        return super(ResultsView, self).dispatch(request, *args, **kwargs)
-    
-    def get_context_data(self, **kwargs):
-        context = super(ResultsView, self).get_context_data(**kwargs)
-        question = context['question']
-        context['user_votes'] = question.choice_set.all().annotate(num=Count('cuserchoice'))
-        print question
+            
         return context
-    
-    def get_queryset(self):        
-        qs = super(ResultsView, self).get_queryset()
-        return qs.filter(pub_date__lte=timezone.now())
+        
     
 

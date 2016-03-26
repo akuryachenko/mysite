@@ -31,3 +31,6 @@ class CUserChoice(models.Model):
     choice= models.ForeignKey(Choice, on_delete=models.CASCADE)
     cuser = models.ForeignKey(CUser, on_delete=models.CASCADE)
     date_vote = models.DateField()
+    
+    class Meta:
+        unique_together = ("choice", "cuser")
