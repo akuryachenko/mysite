@@ -29,19 +29,31 @@ class IndexView(generic.ListView):
         else:
             return question[:5]
     
-    def get_success_url(self):
-        return reverse('results', args=(self.object.id,))   
        
 class DetailView(generic.UpdateView):
     model = Question
     template_name = 'polls/detail.html'
     form_class = QuestionForm
-    #success_url = 'results/'     
+      
     
     def get_queryset(self):
-        qs = super(DetailView, self).get_queryset()
-        return qs.filter(pub_date__lte=timezone.now())
+        question = super(DetailView, self).get_queryset().filter(pub_date__lte=timezone.now())
+        return question
     
+    def get_object(self, queryset=None):
+        question = super(DetailView, self).get_object()
+        if self.request.user.is_authenticated():
+            q_u = CUserChoice.objects.filter(cuser=self.request.user).values('choice__question')
+            
+            if q_u.filter(choice__question=question.id).count() > 0:
+                print "-------------------------------"
+                print q_u.filter(choice__question=question.id).count()
+                reverse('index')
+                
+        return question    
+        
+        
+        
     def dispatch(self, request, *args, **kwargs):
         request.session.delete('anonym_vote')
         return super(DetailView, self).dispatch(request, *args, **kwargs)       
@@ -54,16 +66,26 @@ class DetailView(generic.UpdateView):
             user_choice = CUserChoice(choice=choice, cuser=self.request.user, date_vote = timezone.now())
             user_choice.save()
             
-            print '--------------valid------------'
+            # ---------results
             context = self.get_context_data()
             question = context['question']
-            context['user_votes'] = question.choice_set.all().annotate(num=Count('cuserchoice'))
-            return render(self.request, 'polls/results_new.html', context)
+            votes = question.choice_set.all().annotate(num=Count('cuserchoice'))
             
-            #return HttpResponseRedirect(reverse('results', args=(self.object.id,)))
+            user_votes = [{'text': v.choice_text, 'num': v.num, 'per': 0, 'b': True if v.id==sch else False} for v in votes]
+            
+            sum_votes = 0
+            for i in user_votes:
+                sum_votes = sum_votes + i['num']
+                
+            for i in user_votes:
+                i['per'] = i['num']* 100 / sum_votes
+                                
+            context['user_votes'] = user_votes
+            return render(self.request, 'polls/results.html', context)
+                       
         else:
             self.request.session['anonym_vote'] = sch
-            return HttpResponseRedirect(reverse('registration'))
+            return HttpResponseRedirect('/')
 
 class ResultsView(generic.DetailView):
     model = Question

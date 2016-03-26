@@ -1,36 +1,22 @@
-{% extends "base.html" %}
-{% load i18n static %}
-
-{% block title %}{{ question.question_text }}{% endblock %}
-
-{% block content %}
-
-<div class="container">
-    <div class="row">
-        <h4 class="header col s12 black-text"> {{ question.question_text }}</h4>
-    </div>    
-</div>        
-
-    <div class="container">
-        <div class="row">
-            <table class="col s12 black-text">
-                {% for choice in user_votes %}
-                    <tr>
-                        <td>{{ choice.choice_text }}</td>
-                        <td>{{ choice.num }} vote{{ choice.num|pluralize }}</td>
-                    </tr>    
-                {% endfor %}
-            </table>
-        </div>       
-    </div>
-
-    <div class="container">
-        <div class="row">
-            <a class="waves-effect waves-light btn" href="{% url 'index' %}"> <i class="material-icons left">view_list</i>Exit polling</a>
-
-            </button>
-        </div>            
-
-</div>
-
-{% endblock %}
+<div class="row">        
+    <h4 class="header col s12   white-text"> {{ question.question_text }} </h4> 
+    <div class="col s6 m4">        
+        <div class="card white " style="opacity: 0.8">
+            <div class="card-content">
+                <table height=100  class="black-text">
+                    {% for choice in user_votes %}
+                        <tr>
+                            <td>
+                                <div style="width: {{ choice.per }}%; background: #b0bec5; overflow:visible; border-radius: 5px;">
+                                    <div style="width:300px;">
+                                    {{ choice.per }}% {{ choice.text }} {% if choice.b %} <i class="tiny material-icons">done</i>{% endif %}
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>    
+                    {% endfor %}
+                </table>                    
+            </div>    
+        </div>  
+    </div>          
+</div>         
