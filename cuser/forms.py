@@ -39,7 +39,7 @@ class EmailUserConfirmForm(forms.ModelForm):
         label=_("Daily reports"),
         widget=forms.CheckboxInput,
         required=False,
-        help_text=_("Agree to Receive email daily reports about new pollss?"))
+        help_text=_("Agree to Receive email daily reports about new polls?"))
     
     class Meta:
         model = CUser
@@ -65,6 +65,7 @@ class EmailUserConfirmForm(forms.ModelForm):
     def save(self, commit=True):
         user = super(EmailUserConfirmForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
+        user.daily_reports = self.cleaned_data['daily_reports']
         user.is_active = True
         if commit:
             user.save()       

@@ -17,9 +17,6 @@
                     <label class="" for="id_email">Email address:</label>
                     <div id="id_email">{{ form.email }} </div>
                     <label class="" for="id_password1">Password:</label>
-                    {% for k, message in password1.errors.items %}
-                        {{ message }}
-                    {% endfor %}
                     <input id="id_password1" type="password" name="password1">
                     <label class="" for="id_password2">Password confirmation:</label>
                     <input id="id_password2" type="password" name="password2">

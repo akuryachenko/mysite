@@ -1,0 +1,7 @@
+{% load i18n %}
+Account activation on the website online-polling.com
+
+To complete registration, follow the activation link in your email-address:
+
+
+To complete the account activation procedure.
