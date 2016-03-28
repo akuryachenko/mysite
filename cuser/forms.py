@@ -30,15 +30,22 @@ class EmailUserConfirmForm(forms.ModelForm):
     password1 = forms.CharField(
         label=_("Password"),
         widget=forms.PasswordInput)
+    
     password2 = forms.CharField(
         label=_("Password confirmation"),
-        widget=forms.PasswordInput,
-        help_text=_("Enter the same password as above, for verification."))
-
+        widget=forms.PasswordInput)
+    
+    daily_reports = forms.BooleanField(
+        label=_("Daily reports"),
+        widget=forms.CheckboxInput,
+        required=False,
+        help_text=_("Agree to Receive email daily reports about new pollss?"))
+    
     class Meta:
         model = CUser
-        fields = ('email',)
-    
+        fields = ('email', 'password1','password2','daily_reports' )
+        
+        
     def __init__(self, *args, **kwargs):
         super(EmailUserConfirmForm, self).__init__(*args, **kwargs)
         instance = getattr(self, 'instance', None)

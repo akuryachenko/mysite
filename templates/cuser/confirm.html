@@ -14,9 +14,28 @@
                   <span class="card-title">Confirm your email</span>
                     {% csrf_token %}
                     <br>
-                    {{form}}
+                    <label class="" for="id_email">Email address:</label>
+                    <div id="id_email">{{ form.email }} </div>
+                    <label class="" for="id_password1">Password:</label>
+                    {% for k, message in password1.errors.items %}
+                        {{ message }}
+                    {% endfor %}
+                    <input id="id_password1" type="password" name="password1">
+                    <label class="" for="id_password2">Password confirmation:</label>
+                    <input id="id_password2" type="password" name="password2">
+                    <div class="checkbox-field">
+                        <input id="id_daily_reports" name="daily_reports" type="checkbox">
+                        <label for="id_daily_reports">Daily reports</label>
+                    </div>                    
+                    <br>
+                    <span class="helptext">Agree to Receive email daily reports about new pollss?</span>
                 </div>
                 <div class="card-action">
+                    <div class='red-text'>
+                    {% for k, message in form.errors.items %}
+                        {{ message }}
+                    {% endfor %}
+                    </div>
                     <button class="waves-effect btn waves-light" type="submit" name="confirm" value="confirm" >Confirm
                     <i class="material-icons right">check_circle</i>            
                     </button>

@@ -40,6 +40,7 @@ class CUser(AbstractBaseUser):
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    daily_reports = models.BooleanField(default=False, verbose_name = _("daily reports"))
 
     objects = CUserManager()
 
