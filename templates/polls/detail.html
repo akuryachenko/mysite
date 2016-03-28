@@ -5,7 +5,7 @@
 
 {% block content %}
 <div class="parallax-container" style="height: 100%;">
-    <div class="parallax"><img src="/static/{{ question.question_img}}"></div>
+    <div class="parallax">{% if question.question_img %}<img src="/static/{{ question.question_img}}">{% endif %}</div>
         <div class="container">
             <form method="post" id = "form1">
                 {% csrf_token %}    

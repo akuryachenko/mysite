@@ -32,6 +32,6 @@ urlpatterns = [
     url(r'^registration/$', vw_cuser.EmailUserRegistrationView.as_view(), name='registration'),
     url(r'^confirm-email/(?P<pk>\d+)/(?P<sign_user>[\w.@+-_]+)/', vw_cuser.EmailUserConfirmView.as_view(), name='confirm'),
     url(r'^login/$', login, {'template_name': 'cuser/login.html'}, name='login'),
-    url(r'^password_change/$', password_change, {'template_name': 'cuser/password_change.html', 'post_change_redirect': 'index'}, name='password_change'),
+    url(r'^password-change/$', password_change, {'template_name': 'cuser/password_change.html', 'post_change_redirect': 'index'}, name='password_change'),
     url(r'^logout/$', logout, {'next_page': 'index'}, name = 'logout'),
 ]
