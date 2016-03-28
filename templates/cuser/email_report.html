@@ -9,7 +9,19 @@
     <body>
         <h2 class="messageSubjectValue">Daily reports about new polls on the website online-polling.com</h2>
         <br>
-        <p>reference:<a href="{{ report }}"></a></p>
-            
+        <table >
+            <tr>
+                <th>Question</th>
+                <th>Date published</th>
+            </tr>
+            {% for q in report%}
+            <tr>
+
+                <td>{{q.question_text }}</td><td>{{q.pub_date }}</td
+                
+            </tr>
+            {% endfor %}
+                
+        </table>
     </body>
 </html>

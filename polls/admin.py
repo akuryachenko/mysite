@@ -27,6 +27,6 @@ class QuestionAdmin(admin.ModelAdmin):
     
     was_published_recently.admin_order_field = 'pub_date'
     was_published_recently.boolean = True
-    was_published_recently.short_description = 'Published last week?'
+    was_published_recently.short_description = 'Published last day?'
     
 admin.site.register(Question, QuestionAdmin)

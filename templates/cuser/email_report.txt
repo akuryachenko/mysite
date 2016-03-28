@@ -1,7 +1,11 @@
 {% load i18n %}
-Account activation on the website online-polling.com
-
-To complete registration, follow the activation link in your email-address:
-
+Daily reports about new polls on the website online-polling.com
+    
+    Question                    Date published 
+    _______________________________________
+{% for q in report%}
+    {{q.question_text }}        {{q.pub_date }}
+    ________________________________________
+{% endfor %}
 
 To complete the account activation procedure.
