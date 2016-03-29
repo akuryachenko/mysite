@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block title %}Your polling results{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col s12 black-text" >  
+            {% if list_results %}
+                <div class="collection">
+                {% for res in list_results %}
+                    <li class="collection-item avatar">{% if res.choice.question.question_img %}<img src="/static/{{ res.choice.question.question_img}}" alt="" class="circle">{% endif %}
+                        <a class="row collection-item black-text" href="{% url 'detail' res.choice.question.id %}">
+                            <div class="col s6">{{ res.choice.question.question_text }}</div>
+                            <div class="col s4">Choice: {{ res.choice.choice_text }}</div>                        
+                            <div class="col s2">Date: {{ res.date_vote }}</div>
+                        </a>
+                    </li>    
+                {% endfor %}
+                </div>
+                {% else %}
+                <p>No polls are available.</p>
+            {% endif %}
+        </div>
+    </div>
+ </div>      
+{% endblock %}

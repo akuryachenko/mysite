@@ -1,0 +1,89 @@
+Content-Type: multipart/alternative;
+ boundary="===============0903491341341026755=="
+MIME-Version: 1.0
+Subject: Daily reports about new polls on the website online-polling.com
+From: ainf23@rambler.ru
+To: ainf23@rambler.ru
+Date: Mon, 28 Mar 2016 11:16:47 -0000
+Message-ID: <20160328111647.8403.38547@kvn-TC>
+
+--===============0903491341341026755==
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+
+Daily reports about new polls on the website online-polling.com
+    
+    Question                    Date published 
+    _______________________________________
+
+    Your  favorite dish.        March 23, 2016, 7 p.m.
+    ________________________________________
+
+    Who are you?        March 9, 2016, 3:37 p.m.
+    ________________________________________
+
+    Who is your favorite Beatle?        March 8, 2016, 1:16 p.m.
+    ________________________________________
+
+    What is up?        March 8, 2016, 10:53 a.m.
+    ________________________________________
+
+
+To complete the account activation procedure.
+
+--===============0903491341341026755==
+MIME-Version: 1.0
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta http-equiv="Content-Type" content="text/html charset=utf-8" />
+    <title>Online polling</title>
+</head>
+
+    <body>
+        <h2 class="messageSubjectValue">Daily reports about new polls on the website online-polling.com</h2>
+        <br>
+        <table >
+            <tr>
+                <th>Question</th>
+                <th>Date published</th>
+            </tr>
+            
+            <tr>
+
+                <td>Your  favorite dish.</td><td>March 23, 2016, 7 p.m.</td
+                
+            </tr>
+            
+            <tr>
+
+                <td>Who are you?</td><td>March 9, 2016, 3:37 p.m.</td
+                
+            </tr>
+            
+            <tr>
+
+                <td>Who is your favorite Beatle?</td><td>March 8, 2016, 1:16 p.m.</td
+                
+            </tr>
+            
+            <tr>
+
+                <td>What is up?</td><td>March 8, 2016, 10:53 a.m.</td
+                
+            </tr>
+            
+                
+        </table>
+    </body>
+</html>
+
+--===============0903491341341026755==--
+
+-------------------------------------------------------------------------------
