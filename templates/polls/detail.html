@@ -10,7 +10,12 @@
             <form method="post" id = "form1">
                 {% csrf_token %}    
                 <div class="row">        
-                    <h4 class="header col s12   white-text"> {{ question.question_text }}
+                    {% if question.question_img %}
+                        <h4 class="header col s12 white-text">
+                    {% else %}
+                        <h4 class="header col s12 black-text">
+                    {% endif %}
+                    {{ question.question_text }}</h4>
                     <a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-hashtags="online-polling">Tweet</a>  
                     </h4> 
                     <div class="col s6 m4">        

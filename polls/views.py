@@ -33,9 +33,8 @@ class IndexView(generic.ListView):
 class UserResultsView(generic.ListView):
     
     template_name = 'polls/userresults.html'
-    context_object_name = 'questions'
+    context_object_name = 'list_results'
 
-    
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated():
             raise Http404("Not authenticated user")
@@ -43,25 +42,8 @@ class UserResultsView(generic.ListView):
 
     def get_queryset(self):
         if self.request.user.is_authenticated():
-            choices = CUserChoice.objects.filter(cuser=self.request.user).values('choice__question').order_by('-date_vote')
-            questions = Question.objects.filter(id__in=choices)
-            return questions
+            return CUserChoice.objects.filter(cuser=self.request.user).select_related('choice__question','choice' )
         return None    
-
-
-    
-"""    
-    def get_context_data(self, **kwargs):
-        context = super(UserResultView, self).get_context_data(**kwargs)
-        
-        if self.request.user.is_authenticated():
-            choices = CUserChoice.objects.filter(cuser=self.request.user).values('choice__question', 'date_vote').order_by('-date_vote')
-            questions = Question.objects.filter(id__in=choices).choice_set.all()
-                      
-            context[''] = user_votes
-            
-        return contex
-"""    
 
        
 class DetailView(generic.UpdateView):
@@ -133,6 +115,7 @@ class DetailView(generic.UpdateView):
             context['user_votes'] = user_votes
             
         return context
+        
         
     
 
