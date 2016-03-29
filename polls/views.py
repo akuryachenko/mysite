@@ -28,7 +28,41 @@ class IndexView(generic.ListView):
             return question.exclude(id__in=q_u)[:5]
         else:
             return question[:5]
+
     
+class UserResultsView(generic.ListView):
+    
+    template_name = 'polls/userresults.html'
+    context_object_name = 'questions'
+
+    
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated():
+            raise Http404("Not authenticated user")
+        return super(UserResultsView, self).dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated():
+            choices = CUserChoice.objects.filter(cuser=self.request.user).values('choice__question').order_by('-date_vote')
+            questions = Question.objects.filter(id__in=choices)
+            return questions
+        return None    
+
+
+    
+"""    
+    def get_context_data(self, **kwargs):
+        context = super(UserResultView, self).get_context_data(**kwargs)
+        
+        if self.request.user.is_authenticated():
+            choices = CUserChoice.objects.filter(cuser=self.request.user).values('choice__question', 'date_vote').order_by('-date_vote')
+            questions = Question.objects.filter(id__in=choices).choice_set.all()
+                      
+            context[''] = user_votes
+            
+        return contex
+"""    
+
        
 class DetailView(generic.UpdateView):
     model = Question
@@ -40,6 +74,7 @@ class DetailView(generic.UpdateView):
         return question
     
     def dispatch(self, request, *args, **kwargs):
+
         request.session.delete('anonym_vote')
         return super(DetailView, self).dispatch(request, *args, **kwargs)       
             
