@@ -9,7 +9,7 @@
     <div class="row">
         <form method="POST" action="" class="card grey lighten-5 col s4 offset-s4">{% csrf_token %}
             <div class="card-content black-text">
-                <span class="card-title">Confirm your email</span>
+                <span class="card-title">Log in</span>
                 {% if form.username.help_text %}
                 <div class="row tooltipped" data-position="left" data-delay="50" data-tooltip="{{ form.username.help_text }}">    
                 {% else %}

@@ -13,7 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf import settings
+from django.conf.urls import include, patterns, url
+
 from django.contrib import admin
 from django.contrib.auth.views import login, password_change, logout
 from django.conf.urls import url, include
@@ -36,3 +38,9 @@ urlpatterns = [
     url(r'^password-change/$', password_change, {'template_name': 'cuser/password_change.html', 'post_change_redirect': 'index'}, name='password_change'),
     url(r'^logout/$', logout, {'next_page': 'index'}, name = 'logout'),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += patterns('',
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    )
