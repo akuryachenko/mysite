@@ -1,27 +1,20 @@
 <div class="row">        
-    {% if question.question_img %}
-        <h4 class="header col s12 white-text">
-    {% else %}
-        <h4 class="header col s12 black-text">
-    {% endif %}
-    {{ question.question_text }}</h4>
-    <div class="col s6 m4">        
-        <div class="card white " style="opacity: 0.8">
-            <div class="card-content">
-                <table height=100  class="black-text">
-                    {% for choice in user_votes %}
-                        <tr>
-                            <td>
-                                <div style="width: {{ choice.per }}%; background: #b0bec5; overflow:visible; border-radius: 5px;">
-                                    <div style="width:300px;">
-                                    {{ choice.per }}% {{ choice.text }} {% if choice.b %} <i class="tiny material-icons">done</i>{% endif %}
-                                    </div>
+    <div class="card white col s12" style="opacity: 0.8">
+        <div class="card-content">
+            <span class="card-title">{{ question.question_text }}</span>
+            <table height=100  class="black-text">
+                {% for choice in user_votes %}
+                    <tr>
+                        <td>
+                            <div style="width: {{ choice.per }}%; background: #b0bec5; overflow:visible; border-radius: 5px;">
+                                <div style="width:300px;">
+                                {{ choice.per }}% {{ choice.text }} {% if choice.b %} <i class="tiny material-icons">done</i>{% endif %}
                                 </div>
-                            </td>
-                        </tr>    
-                    {% endfor %}
-                </table>                    
-            </div>    
-        </div>  
-    </div>          
+                            </div>
+                        </td>
+                    </tr>    
+                {% endfor %}
+            </table>                    
+        </div>    
+    </div>  
 </div>         

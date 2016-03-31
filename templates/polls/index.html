@@ -1,44 +1,26 @@
-{% extends "base.html" %}
+{% extends "polls/detail.html" %}
 {% load i18n static %}
 
 {% block title %}Welcome{% endblock %}
 
-{% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col s12 black-text" >  
-            {% if question_list %}
-                <div class="collection">
+{% block index %}
+<span>
+<div class="col s8">
+    <div class="container">                
+        <div class="row">
+            <div col s12>
+                <ul class="collection">
                 {% for quest in question_list %}
                     <li class="collection-item avatar">
                         {% if quest.question_img %}<img src="/static/{{ quest.question_img}}" alt="" class="circle">{% endif %}
-                        {% if user.is_authenticated and quest.id = question.id %}  
-                        <div class="collection-item black-text">{{ quest.question_text }}</div>
-                        <form class="row" method="post" action="" id="form1">{% csrf_token %}    
-                            <div class="card grey lighten-2 z-depth-0 col s6 m4">
-                                <div class="card-content">
-                                    {% for choice in form.ch %}
-                                        <div class="row">{{ choice.tag }}<label class="bold black-text" for="{{ choice.id_for_label }}">{{ choice.choice_label  }}</label></div>
-                                    {% endfor %}
-                                </div>  
-                            </div>  
-                        </form>                       
-                        {% else %}
-                            <a class="collection-item black-text" href="{% url 'detail' quest.id %}">{{ quest.question_text }}</a>
-                        {% endif %}  
+                        <a class="collection-item black-text" href="{% url 'detail' quest.id %}">{{ quest.question_text }}</a>   
                     </li>    
                 {% endfor %}
-                </div>
-                {% else %}
-                <p>No polls are available.</p>
-            {% endif %}
-        </div>
+                </ul>
+            </div>        
+        </div>    
     </div>
- </div>      
+</div>
+</span>    
 {% endblock %}
 
-{% block extrajs %}
-    {% if user.is_authenticated %}  
-        <script src="{% static 'js/index.js' %}"></script>   
-    {% endif %}  
-{% endblock %}

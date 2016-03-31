@@ -12,10 +12,9 @@ from random import choice as random_choice
 from .models import Choice, Question, CUserChoice
 from .forms import *
 
-class IndexView(generic.UpdateView):
-    model = Question
+class IndexView(generic.ListView):
     template_name = 'polls/index.html'
-    form_class = QuestionForm
+    context_object_name = 'question_list'
 
     def get_queryset(self):
         question = Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')
@@ -35,24 +34,15 @@ class IndexView(generic.UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        context['question_list'] = self.get_queryset()
+        questions = self.get_queryset()
+        if questions:
+            magic_question_id = random_choice([q.id for q in questions])
+            inst = Question.objects.get(id=magic_question_id)
+            context['form'] = QuestionForm(instance=inst)       
+            context['question'] = inst
+            context['question_list'] = questions.exclude(id=inst.id)    
         return context
-    
-    def form_valid(self, form):
-        sch = form.cleaned_data['ch'].id
-        context = self.get_context_data()
-        
-        if self.request.user.is_authenticated():
-            choice = Choice.objects.get(pk=sch)
-            user_choice = CUserChoice(choice=choice, cuser=self.request.user, date_vote = timezone.now())
-            user_choice.save()
-            return HttpResponseRedirect(reverse('detail', args=(context['question'].id,))) 
-                       
-        else:
-            self.request.session['anonym_vote'] = sch
-            return HttpResponseRedirect(reverse('registration'))
-    
-    
+
 class UserResultsView(generic.ListView):
     
     template_name = 'polls/userresults.html'
@@ -114,8 +104,7 @@ class DetailView(generic.UpdateView):
         
         if self.request.user.is_authenticated():
             question = context['question']
-            print question
-
+           
             choices = Choice.objects.filter(question=question).values('id') #all().cuserchoice_set(cuser=self.request.user).all().first()
             vote = CUserChoice.objects.filter(cuser=self.request.user).values('choice')
             choice = choices.filter(id__in=vote).first()

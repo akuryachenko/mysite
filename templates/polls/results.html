@@ -1,42 +1,8 @@
-{% extends "base.html" %}
+{% extends "polls/detail.html" %}
 {% load i18n static %}
 
 {% block title %}{{ question.question_text }}{% endblock %}
 
-{% block content %}
-<div class="parallax-container" style="height: 100%;">
-    <div class="parallax">{% if question.question_img %}<img src="/static/{{ question.question_img}}">{% endif %}</div>
-        <div class="container">
-            <div class="row">        
-                {% if question.question_img %}
-                    <h4 class="header col s12 white-text">
-                {% else %}
-                    <h4 class="header col s12 black-text">
-                {% endif %}
-                {{ question.question_text }}</h4>
-                <div class="col s6 m4">        
-                    <div class="card white " style="opacity: 0.8">
-                        <div class="card-content">
-                            <table height=100  class="black-text">
-                                {% for choice in user_votes %}
-                                    <tr>
-                                        <td>
-                                            <div style="width: {{ choice.per }}%; background: #b0bec5; overflow:visible; border-radius: 5px;">
-                                                <div style="width:300px;">
-                                                {{ choice.per }}% {{ choice.text }} {% if choice.b %} <i class="tiny material-icons">done</i>{% endif %}
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>    
-                                {% endfor %}
-                            </table>                    
-                        </div>    
-                    </div>  
-                </div>          
-            </div>         
-        </div>    
-    </div>
-</div>
-       
-{% endblock %}
-
+{% block detail %}
+    {% include 'polls/detail_results.html' %}
+{% endblock %}   
