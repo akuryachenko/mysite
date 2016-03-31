@@ -31,7 +31,7 @@ class  EmailUserRegistrationView(CreateView):
         user = self.object 
         signer = Signer()
        
-        ref_url = '{}confirm-email/{}/{}/'.format(self.request.build_absolute_uri('/'), user.id, signer.sign(user.email))
+        ref_url = '{}confirm-email/{}/{}/'.format(self.request.build_absolute_uri('/'), user.id, signer.signature(user.email))
         
         txt_body = render_to_string(self.email_text_template_name,
                                     {'reference': ref_url})
@@ -69,7 +69,7 @@ class  EmailUserConfirmView(UpdateView):
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         signer = Signer()
-        s1 = signer.sign(self.object.email)
+        s1 = signer.signature(self.object.email)
         s2 = kwargs.get('sign_user', None)
         
         if self.object.is_active == True:

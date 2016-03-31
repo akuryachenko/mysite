@@ -1,7 +1,8 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-
+from django.contrib.auth import password_validation
+from django.core.exceptions import ValidationError
 from .models import CUser
 
 class EmailUserRegistrationForm(forms.ModelForm):
@@ -29,7 +30,8 @@ class EmailUserConfirmForm(forms.ModelForm):
 
     password1 = forms.CharField(
         label=_("Password"),
-        widget=forms.PasswordInput)
+        widget=forms.PasswordInput,
+        help_text=password_validation.password_validators_help_text_html())
     
     password2 = forms.CharField(
         label=_("Password confirmation"),
@@ -60,6 +62,7 @@ class EmailUserConfirmForm(forms.ModelForm):
                 self.error_messages['password_mismatch'],
                 code='password_mismatch',
             )
+        password_validation.validate_password(password1)
         return password2
 
     def save(self, commit=True):

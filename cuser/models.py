@@ -17,7 +17,7 @@ class CUserManager(BaseUserManager):
         user.is_active = False
         print   "----------------------------------"
         print user.is_active
-        #user.set_password(None)
+        user.set_unusable_password()
         user.save(using=self._db)
         return user
     
