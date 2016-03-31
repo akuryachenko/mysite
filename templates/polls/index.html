@@ -7,12 +7,25 @@
 <div class="container">
     <div class="row">
         <div class="col s12 black-text" >  
-            {% if latest_question_list %}
+            {% if question_list %}
                 <div class="collection">
-                {% for question in latest_question_list %}
+                {% for quest in question_list %}
                     <li class="collection-item avatar">
-                        {% if question.question_img %}<img src="/static/{{ question.question_img}}" alt="" class="circle">{% endif %}
-                        <a class="collection-item black-text" href="{% url 'detail' question.id %}">{{ question.question_text }}</a>
+                        {% if quest.question_img %}<img src="/static/{{ quest.question_img}}" alt="" class="circle">{% endif %}
+                        {% if user.is_authenticated and quest.id = question.id %}  
+                        <div class="collection-item black-text">{{ quest.question_text }}</div>
+                        <form class="row" method="post" action="" id="form1">{% csrf_token %}    
+                            <div class="card grey lighten-2 z-depth-0 col s6 m4">
+                                <div class="card-content">
+                                    {% for choice in form.ch %}
+                                        <div class="row">{{ choice.tag }}<label class="bold black-text" for="{{ choice.id_for_label }}">{{ choice.choice_label  }}</label></div>
+                                    {% endfor %}
+                                </div>  
+                            </div>  
+                        </form>                       
+                        {% else %}
+                            <a class="collection-item black-text" href="{% url 'detail' quest.id %}">{{ quest.question_text }}</a>
+                        {% endif %}  
                     </li>    
                 {% endfor %}
                 </div>
@@ -22,4 +35,10 @@
         </div>
     </div>
  </div>      
+{% endblock %}
+
+{% block extrajs %}
+    {% if user.is_authenticated %}  
+        <script src="{% static 'js/index.js' %}"></script>   
+    {% endif %}  
 {% endblock %}

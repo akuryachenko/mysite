@@ -5,9 +5,6 @@ $(function () {
         $.post(url, str, function( data ) {
             $( "#form1" ).replaceWith(data);
         });
-        
-        
-        
     });
 });
 

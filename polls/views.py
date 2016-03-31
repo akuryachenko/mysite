@@ -7,28 +7,51 @@ from django.db.models import F, Count
 from django.utils import timezone
 from django.conf import settings
 from django.conf.urls.static import static
-
+from random import choice as random_choice
 
 from .models import Choice, Question, CUserChoice
 from .forms import *
 
-class IndexView(generic.ListView):
+class IndexView(generic.UpdateView):
+    model = Question
     template_name = 'polls/index.html'
-    context_object_name = 'latest_question_list'
+    form_class = QuestionForm
 
     def get_queryset(self):
-        """
-        Return the last five published questions (not including those set to be
-        published in the future).
-        """
         question = Question.objects.filter(pub_date__lte=timezone.now()).order_by('-pub_date')
-        
         if self.request.user.is_authenticated():
             q_u = CUserChoice.objects.filter(cuser=self.request.user).values('choice__question')
-            return question.exclude(id__in=q_u)[:5]
+            return question.exclude(id__in=q_u)
         else:
-            return question[:5]
+            return question
 
+    def get_object(self, queryset=None):
+        questions = self.get_queryset()
+        if questions:
+            magic_question_id = random_choice([q.id for q in questions])
+            return Question.objects.get(id=magic_question_id)
+        else:
+            return None    
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context['question_list'] = self.get_queryset()
+        return context
+    
+    def form_valid(self, form):
+        sch = form.cleaned_data['ch'].id
+        context = self.get_context_data()
+        
+        if self.request.user.is_authenticated():
+            choice = Choice.objects.get(pk=sch)
+            user_choice = CUserChoice(choice=choice, cuser=self.request.user, date_vote = timezone.now())
+            user_choice.save()
+            return HttpResponseRedirect(reverse('detail', args=(context['question'].id,))) 
+                       
+        else:
+            self.request.session['anonym_vote'] = sch
+            return HttpResponseRedirect(reverse('registration'))
+    
     
 class UserResultsView(generic.ListView):
     
@@ -56,7 +79,6 @@ class DetailView(generic.UpdateView):
         return question
     
     def dispatch(self, request, *args, **kwargs):
-
         request.session.delete('anonym_vote')
         return super(DetailView, self).dispatch(request, *args, **kwargs)       
             
