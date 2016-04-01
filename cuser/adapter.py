@@ -7,8 +7,6 @@ from django.conf import settings
 
 from cuser.models import CUser
 
-
-
 class CUserSocialAccountAdapter(DefaultSocialAccountAdapter):
 
     def pre_social_login(self, request, sociallogin):
@@ -36,7 +34,6 @@ class CUserSocialAccountAdapter(DefaultSocialAccountAdapter):
         for email in sociallogin.email_addresses:
             verified_email = email
             break
-
         # no verified emails found, nothing more to do
         if not verified_email:
             return
@@ -52,7 +49,6 @@ class CUserSocialAccountAdapter(DefaultSocialAccountAdapter):
         
         except EmailAddress.DoesNotExist:
             return
-
         #if it does, connect this new social login to the existing user
         sociallogin.connect(request, existing_email.user)    
         """

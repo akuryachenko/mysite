@@ -17,8 +17,7 @@ class EmailUserRegistrationForm(forms.ModelForm):
     def save(self, commit=True):
         user = super(EmailUserRegistrationForm, self).save(commit=False)
         user.is_active = False
-        if commit:
-            user.save()
+        user.save()
         return user
     
     
@@ -70,8 +69,7 @@ class EmailUserConfirmForm(forms.ModelForm):
         user.set_password(self.cleaned_data["password1"])
         user.daily_reports = self.cleaned_data['daily_reports']
         user.is_active = True
-        if commit:
-            user.save()       
+        user.save()       
         return user
 
 

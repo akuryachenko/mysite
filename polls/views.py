@@ -24,14 +24,6 @@ class IndexView(generic.ListView):
         else:
             return question
 
-    def get_object(self, queryset=None):
-        questions = self.get_queryset()
-        if questions:
-            magic_question_id = random_choice([q.id for q in questions])
-            return Question.objects.get(id=magic_question_id)
-        else:
-            return None    
-
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
         questions = self.get_queryset()
@@ -51,12 +43,14 @@ class UserResultsView(generic.ListView):
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated():
             raise Http404("Not authenticated user")
-        return super(UserResultsView, self).dispatch(request, *args, **kwargs)
+        else:
+            return super(UserResultsView, self).dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         if self.request.user.is_authenticated():
             return CUserChoice.objects.filter(cuser=self.request.user).select_related('choice__question','choice' )
-        return None    
+        else:
+            return None    
 
        
 class DetailView(generic.UpdateView):
@@ -96,8 +90,8 @@ class DetailView(generic.UpdateView):
             q_u = CUserChoice.objects.filter(cuser=self.request.user).values('choice__question')
             if q_u.filter(choice__question=self.object.id).count() > 0:
                 return ['polls/results.html']      
-                
-            return template_name
+            else:    
+                return template_name
 
     def get_context_data(self, **kwargs):
         context = super(DetailView, self).get_context_data(**kwargs)

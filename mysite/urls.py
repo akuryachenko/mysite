@@ -27,7 +27,7 @@ from cuser import views as vw_cuser
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^accounts/', include('allauth.urls')),
+    url(r'^accounts/', include('allauth.urls'), name='socialaccount'),
     url(r'^userresults/$', vw.UserResultsView.as_view(), name='userresults'),
      url(r'^$', vw.IndexView.as_view(), name='index'),
     url(r'^(?P<pk>[0-9]+)/$', vw.DetailView.as_view(), name='detail'),

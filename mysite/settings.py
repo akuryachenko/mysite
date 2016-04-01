@@ -123,8 +123,6 @@ SOCIALACCOUNT_ADAPTER = 'cuser.adapter.CUserSocialAccountAdapter'
 #ACCOUNT_ADAPTER = 'cuser.adapter.CUserAccountAdapter'
 LOGIN_REDIRECT_URL = '/'
 
-
-
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Password validationfrom django.core.urlresolvers import reverse
@@ -172,6 +170,13 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'files/static')
 MEDIA_URL = '/images/'
+
+THUMBNAIL_BASEDIR = os.path.join(BASE_DIR, 'files/thumb')
+THUMBNAIL_ALIASES = {
+    '': {
+        'avatar': {'size': (50, 50), 'crop': True},
+    },
+}
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), os.path.join(BASE_DIR, '..', 'files/static'),)
 

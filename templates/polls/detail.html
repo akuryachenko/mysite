@@ -1,24 +1,27 @@
 {% extends "base.html" %}
 {% load i18n static %}
+{% load thumbnail %}
 
 {% block title %}{{ question.question_text }}{% endblock %}
 {% block content %}
 {% if question %}
 <div class="parallax-container" style="height: 100%;">
-    <div class="parallax">{% if question.question_img %}<img src="/static/{{ question.question_img}}">{% endif %}</div>
-            <div class="row"></div>
-            <div class="row">
-                <div class="col s4">
-                    <div class="container">                
-                        {% block detail %}
-                            {% include 'polls/vote.html' %}
-                        {% endblock %}   
-                    </div>    
-                </div>    
-                {% block index %}{% endblock %}   
+    <div class="parallax">
+        {% if question.question_img %}
+            <img <img src="{% thumbnail question.question_img 100x100 crop %}" alt=""/>
+        {% endif %}
+    </div>
+    <div class="row"></div>
+    <div class="row">
+        <div class="col s4">
+            <div class="container">                
+                {% block detail %}
+                    {% include 'polls/vote.html' %}
+                {% endblock %}   
             </div>    
         </div>    
-    </div>
+        {% block index %}{% endblock %}   
+    </div>            
 </div>
 {% else %}
 <div class="container">

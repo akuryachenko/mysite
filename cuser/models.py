@@ -15,8 +15,6 @@ class CUserManager(BaseUserManager):
         user = self.model(email=self.normalize_email(email), **extra_fields)
         user.is_admin = False
         user.is_active = False
-        print   "----------------------------------"
-        print user.is_active
         user.set_unusable_password()
         user.save(using=self._db)
         return user
@@ -31,9 +29,10 @@ class CUserManager(BaseUserManager):
         user.is_active = True
         user.save(using=self._db)
         return user
-
+"""
     def email_user(self, subject, message, from_email=None, **kwargs):
         send_mail(subject, message, from_email, [self.email], **kwargs)
+"""
 
 class CUser(AbstractBaseUser):
     email = models.EmailField(_('email address'), max_length=254, unique=True)
@@ -50,10 +49,6 @@ class CUser(AbstractBaseUser):
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
-
-    def email_user(self, subject, message, from_email=None, **kwargs):
-
-        send_mail(subject, message, from_email, [self.email], **kwargs)
 
     def get_full_name(self):
         # The user is identified by their email address
@@ -87,3 +82,7 @@ class CUser(AbstractBaseUser):
         "Username"
         # Simplest possible answer: All admins are staff
         return self.email
+"""
+    def email_user(self, subject, message, from_email=None, **kwargs):
+        send_mail(subject, message, from_email, [self.email], **kwargs)
+"""
