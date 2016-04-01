@@ -6,5 +6,4 @@ class QuestionForm(forms.Form):
 
     def __init__(self, instance, *args, **kwargs):
         super(QuestionForm, self).__init__(*args, **kwargs)
-        if instance:
-            self.fields['ch'].queryset = instance.choice_set.all()            
+        self.fields['ch'].queryset = instance.choice_set.all()            

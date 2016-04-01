@@ -10,6 +10,8 @@ import datetime
 from django.template.loader import render_to_string
 from django.contrib.sessions.models import Session
 from django.template.loader import render_to_string
+from django.core import management
+from django.utils.six import StringIO
 
 from polls.models import *
 from .models  import *
@@ -184,8 +186,8 @@ class CUserPollsTests(TestCase):
         self.assertContains(response, "Man")
         
         #unavailability userresults page for anonymous_user 
-        response = self.client.post('userresults')
-        self.assertEqual(response.status_code, 404) 
+        response = self.client.post(reverse('userresults')) 
+        self.assertEqual(response.status_code, 404)
         
         response = self.client.get(reverse('detail',
                                    args=(ret[0].id,)))
@@ -194,12 +196,7 @@ class CUserPollsTests(TestCase):
              
         #early vote
         response = self.client.post("/{}/".format(ret[0].id), {'ch':ret[1].id})
-        #self.assertContains(response, "In order to vote you must register")
-        
-        #session = self.client.session
-        #session['anonym_vote'] = ret[1].id
-        #session.save()
-        
+                
         response= self.client.post('/registration/', {'email':'ainf23@mail.ru'})
         ref = response.context['reference']
         self.assertTrue(CUserChoice.objects.filter(choice = ret[1]).exists())            
@@ -214,6 +211,8 @@ class CUserPollsTests(TestCase):
     def test_authenticated_user(self):
         self.user_add()
         ret1 = create_question_choice("Who are you?", "Man")
+        self.assertEqual(str(ret1[0]), "Who are you?")
+        
         response = self.client.get(reverse('index'))         
         self.assertContains(response, "Man")
         response = self.client.post("/{}/".format(ret1[0].id))         
@@ -231,5 +230,16 @@ class CUserPollsTests(TestCase):
                                    args=(ret1[0].id,)))
         self.assertContains(response, ret1[0].question_text,
                             status_code=200)
-      
+        ClearModels()
     
+class CUserManage(TestCase):
+        
+    def test_manage_daily_report(self):
+        user = create_user("ainf23@rambler.ru") 
+        user.daily_reports = True
+        user.save()
+        ret = create_question_choice("Who are you?", "Man")
+        out = StringIO()
+        management.call_command('daily_report', stdout=out)
+        self.assertEqual('Sent mails to 1 users\n', out.getvalue())
+

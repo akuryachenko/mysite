@@ -21,7 +21,7 @@ class QuestionMethodTests(TestCase):
         time = timezone.now() - datetime.timedelta(days=30)
         old_question = Question(pub_date=time)
         self.assertEqual(old_question.was_published_recently(), False)
-
+    
 class QuestionIndexDetailTests(TestCase):
 
     def test_detail_view_with_a_future_question(self):

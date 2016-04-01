@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load i18n static %}
-{% load thumbnail %}
 
 {% block title %}{{ question.question_text }}{% endblock %}
 {% block content %}
@@ -8,10 +7,10 @@
 <div class="parallax-container" style="height: 100%;">
     <div class="parallax">
         {% if question.question_img %}
-            <img <img src="{% thumbnail question.question_img 100x100 crop %}" alt=""/>
-        {% endif %}
+            <img <img src="/static/{{ question.question_img }}" alt="">
+        {% endif %}    
     </div>
-    <div class="row"></div>
+    <div class="row"></div>"
     <div class="row">
         <div class="col s4">
             <div class="container">                

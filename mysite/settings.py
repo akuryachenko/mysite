@@ -164,27 +164,26 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/stgoogle-chrome-stableatic-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static_root')
-
+STATIC_ROOT = os.path.join(BASE_DIR, '..', '.static_root')
 STATIC_URL = '/static/'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'files/static')
-MEDIA_URL = '/images/'
-
-THUMBNAIL_BASEDIR = os.path.join(BASE_DIR, 'files/thumb')
-THUMBNAIL_ALIASES = {
-    '': {
-        'avatar': {'size': (50, 50), 'crop': True},
-    },
-}
-
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), os.path.join(BASE_DIR, '..', 'files/static'),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), os.path.join(BASE_DIR, '../files/static') )
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
+
+MEDIA_ROOT = os.path.join(BASE_DIR, '../files/static')
+MEDIA_URL = '/images/'
+
+THUMBNAIL_ALIASES = {
+    '': {
+        'avatar': {'size': (100, 100), 'crop': True},
+    },
+}
+
+THUMBNAIL_BASEDIR = os.path.join(BASE_DIR,'../files/static')
 
 try:
     from local_settings import *

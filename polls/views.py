@@ -8,6 +8,7 @@ from django.utils import timezone
 from django.conf import settings
 from django.conf.urls.static import static
 from random import choice as random_choice
+#from easy_thumbnails.files import get_thumbnailer
 
 from .models import Choice, Question, CUserChoice
 from .forms import *
@@ -32,7 +33,8 @@ class IndexView(generic.ListView):
             inst = Question.objects.get(id=magic_question_id)
             context['form'] = QuestionForm(instance=inst)       
             context['question'] = inst
-            context['question_list'] = questions.exclude(id=inst.id)    
+            context['question_list'] = questions.exclude(id=inst.id)
+            #get_thumbnailer(inst.question_img)['avatar']                
         return context
 
 class UserResultsView(generic.ListView):
