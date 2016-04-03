@@ -6,7 +6,7 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from cuser.models import CUser
-
+"""
 def normalization_file_name(instance, filename):
     new_name = 1
     for root, dirs, files in os.walk(settings.MEDIA_ROOT):
@@ -17,7 +17,9 @@ def normalization_file_name(instance, filename):
                     new_name =  int(f)+1                     
         break
     return "{}{}".format(new_name, os.path.splitext(filename)[1])
-
+"""
+def normalization_file_name(instance, filename):
+    return "img{}".format(os.path.splitext(filename)[1])
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
