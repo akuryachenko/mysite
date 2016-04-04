@@ -1,5 +1,6 @@
 {% extends "polls/detail.html" %}
 {% load i18n static %}
+{% load thumbnail %}
 
 {% block title %}Welcome{% endblock %}
 
@@ -12,7 +13,10 @@
                 <ul class="collection">
                 {% for quest in question_list %}
                     <li class="collection-item avatar">
-                        {% if quest.question_img %}<img src="/static/{{ quest.question_img}}" alt="" class="circle">{% endif %}
+                        {% if quest.question_img %}
+                        
+                        <img src="{% thumbnail '/static/quest.question_img' 100x100 %}" alt="" class="circle">
+                        {% endif %}
                         <a class="collection-item black-text" href="{% url 'detail' quest.id %}">{{ quest.question_text }}</a>   
                     </li>    
                 {% endfor %}

@@ -183,7 +183,6 @@ THUMBNAIL_ALIASES = {
     },
 }
 
-THUMBNAIL_BASEDIR = os.path.join(BASE_DIR,'../files/static')
 
 try:
     from local_settings import *
