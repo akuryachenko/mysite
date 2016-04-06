@@ -4,6 +4,7 @@
 
 {% block title %}Welcome{% endblock %}
 
+
 {% block index %}
 <span>
 <div class="col s8">
@@ -14,8 +15,7 @@
                 {% for quest in question_list %}
                     <li class="collection-item avatar">
                         {% if quest.question_img %}
-                        
-                        <img src="{% thumbnail '/static/quest.question_img' 100x100 %}" alt="" class="circle">
+                            <img src="{{ quest.question_img|thumbnail_url:'avatar' }}" alt="" class="circle">
                         {% endif %}
                         <a class="collection-item black-text" href="{% url 'detail' quest.id %}">{{ quest.question_text }}</a>   
                     </li>    

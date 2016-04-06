@@ -1,5 +1,5 @@
 {% load i18n %}
-Account activation on the website online-polling.com
+Account activation on the website {{ site }}
 
 To complete registration, follow the activation link in your email-address:
 {{ reference }}

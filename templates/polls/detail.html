@@ -7,7 +7,7 @@
 <div class="parallax-container" style="height: 100%;">
     <div class="parallax">
         {% if question.question_img %}
-            <img <img src="/static/{{ question.question_img }}" alt="">
+            <img src="{{ question.question_img.url }}" alt="">
         {% endif %}    
     </div>
     <div class="row"></div>"

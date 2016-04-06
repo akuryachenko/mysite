@@ -10,6 +10,8 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils import timezone
 from django.contrib.auth import authenticate, login
+from django.contrib.sites.models import Site
+
 
 from polls.models import Choice, Question, CUserChoice
 from .models import CUser
@@ -30,20 +32,24 @@ class  EmailUserRegistrationView(CreateView):
         resp = super(EmailUserRegistrationView, self).form_valid(form)
         user = self.object 
         signer = Signer()
-       
-        ref_url = '{}confirm-email/{}/{}/'.format(self.request.build_absolute_uri('/'), user.id, signer.signature(user.email))
+        
+        site = Site.objects.get(id=settings.SITE_ID)
+                
+        ref_url = 'http://{}/confirm-email/{}/{}/'.format(site.domain, user.id, signer.signature(user.email))
         
         txt_body = render_to_string(self.email_text_template_name,
-                                    {'reference': ref_url})
+                                    {'reference': ref_url, 'site': site.name})
     
         html_body = render_to_string(self.email_html_template_name,
-                                    {'reference': ref_url})
+                                    {'reference': ref_url, 'site': site.name})
+        from_email = '{}{}'.format(settings.DEFAULT_FROM_EMAIL, site.domain)
+        
         send_mail(
             recipient_list = [user.email],
             subject = 'Account activation on the website online-polling.com', 
             message=txt_body,
             html_message=html_body,
-            from_email = settings.DEFAULT_FROM_EMAIL ,
+            from_email = from_email ,
             fail_silently = True,
         )
         #save early voting
