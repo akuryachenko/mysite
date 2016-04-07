@@ -32,15 +32,16 @@ class Command(BaseCommand):
             q_u = CUserChoice.objects.filter(cuser=user).values('choice__question')
             question = new_questions.exclude(id__in=q_u).values('question_text',  'pub_date' )
             
-            txt_body = render_to_string(email_text_template_name, {'report': question, 'site': site.name})
-            html_body = render_to_string(email_html_template_name, {'report': question, 'site': site.name})
-            
-            send_mail(
-                recipient_list = [user.email],
-                subject = 'Daily reports about new polls on the website {}'.format(site.name), 
-                message=txt_body,
-                html_message=html_body,
-                from_email = from_email ,
-                fail_silently = True
-            )
-            self.stdout.write('Sent mails to {} users'.format(users.count()))
+            if question:
+                txt_body = render_to_string(email_text_template_name, {'report': question, 'site': site.name})
+                html_body = render_to_string(email_html_template_name, {'report': question, 'site': site.name})
+                
+                send_mail(
+                    recipient_list = [user.email],
+                    subject = 'Daily reports about new polls on the website {}'.format(site.name), 
+                    message=txt_body,
+                    html_message=html_body,
+                    from_email = from_email ,
+                    fail_silently = True
+                )
+                self.stdout.write('Sent mails to {} users'.format(users.count()))

@@ -1,5 +1,5 @@
 {% load i18n %}
-Daily reports about new polls on the website online-polling.com
+Daily report about new polls on the website {{ site }}
     
     Question                    Date published 
     _______________________________________

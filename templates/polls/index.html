@@ -13,7 +13,7 @@
             <div col s12>
                 <ul class="collection">
                 {% for quest in question_list %}
-                    <li class="collection-item avatar">
+                    <li class="collection-item avatar" style="font-size: 150%;">
                         {% if quest.question_img %}
                             <img src="{{ quest.question_img|thumbnail_url:'avatar' }}" alt="" class="circle">
                         {% endif %}

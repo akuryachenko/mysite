@@ -4,7 +4,6 @@
 
 {% block title %}Your polling results{% endblock %}
 
-
 {% block content %}
 <div class="container">
     <div class="row">
@@ -12,7 +11,7 @@
             {% if list_results %}
                 <div class="collection">
                 {% for res in list_results %}
-                    <li class="collection-item avatar">
+                    <li class="collection-item avatar" style="font-size: 130%;">
                         {% if res.choice.question.question_img %}
                             <img src="{{ res.choice.question.question_img|thumbnail_url:'avatar' }}" alt="" class="circle">
                         {% endif %}

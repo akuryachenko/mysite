@@ -81,8 +81,6 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-SITE_ID = 2
-   
 SOCIALACCOUNT_PROVIDERS = \
     {'facebook':
        {'METHOD': 'oauth2',
@@ -168,7 +166,6 @@ THUMBNAIL_ALIASES = {
     },
 }
 THUMBNAIL_SUBDIR = 'thumbs'
-
 
 try:
     from local_settings import *
