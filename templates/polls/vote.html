@@ -2,7 +2,7 @@
     <div class="card white col s12" style="opacity: 0.8">
         <div class="card-content">
             <span class="card-title">{{ question.question_text }}
-            <a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-hashtags="online-polling">Tweet</a>  
+            <a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-hashtags="{site.site_name}">Tweet</a>  
             </span>
             {% for choice in form.ch %}
                 <div class="row">   
@@ -15,13 +15,13 @@
         <div id="modal1" class="modal modal-fixed-footer" style="width: 30%; height: 22%; z-index: 1003; display: none; opacity: 0; transform: scaleX(0.7); top: 183.058px;">
             <div class="modal-content  black-text">
                 <h3>Online polling</h3>
-                <p>In order to vote you must register</p>
+                <p>In order to vote you must log in</p>
             </div>
             <div class="modal-footer">
                 <a class="modal-action modal-close waves-effect waves-red btn-flat" href="#!">Disagree</a>
-                <button class="input modal-action waves-effect waves-green btn-flat"  type="submit" name="vote" value="vote">Registration</button>
+                <button class="input modal-action waves-effect waves-green btn-flat"  type="submit" name="vote" value="vote">Log in</button>
             </div>
         </div>      
     {% endif %}
-    <div class="col s2"> </div>  
+    <div class="col s2"></div>  
 </form>

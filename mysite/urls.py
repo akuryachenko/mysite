@@ -31,7 +31,7 @@ admin.autodiscover()
 urlpatterns = [
     url(r'^accounts/', include('allauth.urls'), name='socialaccount'),
     url(r'^userresults/$', vw.UserResultsView.as_view(), name='userresults'),
-     url(r'^$', vw.IndexView.as_view(), name='index'),
+    url(r'^$', vw.IndexView.as_view(), name='index'),
     url(r'^(?P<pk>[0-9]+)/$', vw.DetailView.as_view(), name='detail'),
     url(r'^admin/', admin.site.urls),
     url(r'^registration/$', vw_cuser.EmailUserRegistrationView.as_view(), name='registration'),

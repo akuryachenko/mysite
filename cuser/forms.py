@@ -45,7 +45,7 @@ class EmailUserConfirmForm(forms.ModelForm):
     class Meta:
         model = CUser
         fields = ('email', 'password1','password2','daily_reports' )
-        
+        forms.ModelForm
         
     def __init__(self, *args, **kwargs):
         super(EmailUserConfirmForm, self).__init__(*args, **kwargs)
@@ -71,5 +71,4 @@ class EmailUserConfirmForm(forms.ModelForm):
         user.is_active = True
         user.save()       
         return user
-
 

@@ -82,7 +82,7 @@ class DetailView(generic.UpdateView):
                        
         else:
             self.request.session['anonym_vote'] = sch
-            return HttpResponseRedirect(reverse('registration'))
+            return HttpResponseRedirect(reverse('login'))
     
     def get_template_names(self):
         template_name =  super(DetailView, self).get_template_names()

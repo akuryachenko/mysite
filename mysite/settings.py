@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.instagram',
     'easy_thumbnails',
 ]
 
@@ -81,10 +82,14 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-SOCIALACCOUNT_PROVIDERS = \
-    {'facebook':
-       {'METHOD': 'oauth2',
-        'SCOPE': ['email'],
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+SOCIALACCOUNT_QUERY_EMAIL = True
+
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook':{
+        'METHOD': 'oauth2',
+        'SCOPE': ['email', 'public_profile', 'user_friends'],
         'FIELDS': [
             'id',
             'email',
@@ -100,22 +105,25 @@ SOCIALACCOUNT_PROVIDERS = \
         'EXCHANGE_TOKEN': True,
         'LOCALE_FUNC': lambda request: 'en_US',
         'VERIFIED_EMAIL': False,
-        'VERSION': 'v2.5'}}
+        'VERSION': 'v2.5'
+    },    
+}
 
+"""
+'instagram': {
+    'SCOPE':['public_content', 'basic', 'follower_list', 'likes', 'comments', 'relationships'],
+    'METHOD': 'oauth2', #'js_sdk'  # instead of
+    'VERSION': 'v2.5'
+},
+"""
 
-#ACCOUNT_FORMS = {'login': 'django.contrib.auth.forms.AuthenticationForm'}
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'    
-SOCIALACCOUNT_QUERY_EMAIL = True
-
-#24/03/2016
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+#ACCOUNT_EMAIL_VERIFICATION = "none"
 
 SOCIALACCOUNT_ADAPTER = 'cuser.adapter.CUserSocialAccountAdapter'
-#ACCOUNT_ADAPTER = 'cuser.adapter.CUserAccountAdapter'
-LOGIN_REDIRECT_URL = '/'
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 

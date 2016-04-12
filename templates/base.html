@@ -6,33 +6,35 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title>Online polling &mdash; {% block title %}{% endblock %}</title>
+  <title>{{ site.site_name}} &mdash; {% block title %}{% endblock %}</title>
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="{% static 'css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'MDWebfont-master/css/materialdesignicons.min.css' %}" media="all" rel="stylesheet" type="text/css" />
   <link href="{% static 'css/kvn_style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 
 <body>
 <header>  
+    {% if user.is_authenticated %}      
     <ul id="dropdown1" class="dropdown-content">
+        <li><a href="{% url 'userresults' %}">Polling results</a></li>       
+        <li class="divider"></li>
         <li><a href="/password-change">Change password</a></li>
         <li class="divider"></li>
         <li><a href="/logout">Logout</a></li>
     </ul>
+    {% endif %}        
     <nav class="green accent-4" role="navigation">
         <div class="nav-wrapper container"><a id="logo-container" href="{% url 'index' %}" class="brand-logo">Online polling</a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="/about">About</a></li>
-                {% if user.is_authenticated %}
-                    <li><a href="{% url 'userresults' %}">Polling results</a></li>        
-                    <li><a class="dropdown-button" data-activates="dropdown1">{{user.email}}<i class="material-icons right">arrow_drop_down</i></a></li>
+                {% if user.is_authenticated %}                    
+                    <li><a class="dropdown-button" data-activates="dropdown1">{{user.email}}<i class="material-icons right">arrow_drop_down</i></a></li>                    
                 {% else %}    
-                    <li><a href="/registration">Registration</a></li>
-                    <li><a href="/login" class="modal-trigger">Login</a></li>
-                    <li><a href="{% provider_login_url 'facebook' method='oauth2' %}">Facebook</a></li>    
+                    <li><a href="/login" class="modal-trigger">Log in</a></li>                    
                 {% endif %}        
                 
             </ul>

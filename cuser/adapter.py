@@ -10,22 +10,26 @@ from cuser.models import CUser
 class CUserSocialAccountAdapter(DefaultSocialAccountAdapter):
 
     def pre_social_login(self, request, sociallogin):
-                
+        print '-------1----->'
         # social account already exists, so this is just a login
         if sociallogin.is_existing:
             return
-
+        print '-------2----->'
+        print sociallogin.email_addresses
         # some social logins don't have an email address
         if not sociallogin.email_addresses:
             return
-        
+        print '-------3----->'
         email = sociallogin.email_addresses[0]      
+        print sociallogin.email_addresses
                
         try:
             user = CUser.objects.get(email__iexact=email.email)
+            print '----4-------->'
         except:# EmailAddress.DoesNotExist:
+            print '-----5------->'
             return
-            
+             
         sociallogin.connect(request, user)    
         
         

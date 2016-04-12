@@ -11,7 +11,7 @@ from django.template.loader import render_to_string
 from django.utils import timezone
 from django.contrib.auth import authenticate, login
 from django.contrib.sites.models import Site
-
+from django.views import generic
 
 from polls.models import Choice, Question, CUserChoice
 from .models import CUser
@@ -93,4 +93,3 @@ class  EmailUserConfirmView(UpdateView):
         login(self.request, user)
         
         return ret
-    
