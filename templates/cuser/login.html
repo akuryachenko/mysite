@@ -50,7 +50,7 @@
                             <a class="waves-effect btn waves-light" style="width:100%; background-color: #3b5998;  text-transform: capitalize;" href="{% provider_login_url 'facebook' method='oauth2' %}">Login with Facebook
                             <i class="mdi mdi-facebook-box left"></i>            
                             </a>
-                        </div>                            
+                        </div>
                     </div>
                 </div>    
             </div>
@@ -58,14 +58,10 @@
         <div class="row">
             <div class="card grey lighten-5 col s4 offset-s4" style="font-size: 120%">
                 <div class="card-content row center-align">Don't have an account? 
-                    <a href="/registration">Click here</a>                    
+                    <a href="/registration">Click here</a>
                 </div>
-            </div>       
+            </div>
         </div>
     </form> 
 </div>
-{% endblock %}
-
-{% block extrajs %}
-    <script src="{% static 'js/htmltooltip.js' %}"></script> 
 {% endblock %}

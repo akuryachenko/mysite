@@ -13,7 +13,7 @@
                 {% if form.email.help_text %}
                 <div class="row tooltipped" data-position="left" data-delay="50" data-tooltip="{{ form.email.help_text }}">    
                 {% else %}
-                <div class="row">    
+                <div class="row">
                 {% endif %}
                     <div class="input-field col s12">
                         <i class="mdi-communication-email prefix"></i>
@@ -24,7 +24,7 @@
                 </div>
                 <div class="card-action">
                     <button class="waves-effect btn waves-light" type="submit" name="registration" value="registration">Confirm
-                    <i class="material-icons right">check_circle</i>            
+                    <i class="material-icons right">check_circle</i>
                     </button>
                 </div>
             </div>    
@@ -32,9 +32,3 @@
     </div>
 </div>
 {% endblock %}
-
-{% block extrajs %}
-    <script src="{% static 'js/htmltooltip.js' %}"></script>   
-{% endblock %}
-
-   
